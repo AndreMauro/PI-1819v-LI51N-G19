@@ -16,12 +16,12 @@ module.exports = (app) => {
     return app
 
     function getAlbums(req, resp) {
-        const {pathname}  = url.parse(req.url, true) // true to parse also the query-string
+        const pathname  = req.url // true to parse also the query-string
         const method = req.method
         console.log(`${Date()}: request to ${pathname}`)
-    
-        if(method == 'GET' && pathname.indexOf('/:artistId/albums') >= 0){
-            const artist = req.params.artistId
+        if(method == 'GET' && pathname.indexOf('/albums?') >= 0){
+            const artist = pathname.split('artist=')[1].split('&')[0]
+            if(artist == null) return false
             yama.get(artist, (err, albums) => {
                 if(err) {
                     resp.statusCode = err.code
