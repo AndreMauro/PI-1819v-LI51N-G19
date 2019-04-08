@@ -6,7 +6,7 @@ class Yama {
         return new Yama()
     }
 
-    get(id, cb) {
+    getAlbums(id, cb) {
         const returnedAlbums = albums[id]
         if (!returnedAlbums) {
             cb({ code: 404 })
@@ -15,7 +15,10 @@ class Yama {
         }
     }
 }
-const albums = {
+
+//Este objeto tem que conter a mesma organização e informação que tem o 
+//objeto trazido pelo pedido a web api last.fm
+const albums = { 
     'Eminem': {
         'albums': {
             'Kamikaze': {
