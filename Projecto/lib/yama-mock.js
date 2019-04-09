@@ -1,4 +1,7 @@
 'use strict'
+const albumDetails = require('./yama-album-details-mock')
+const albums = require('./yama-albums-mock')
+const artist = require('./yama-artist-mock')
 
 class Yama {
 
@@ -6,36 +9,30 @@ class Yama {
         return new Yama()
     }
 
-    getAlbums(id, cb) {
-        const returnedAlbums = albums[id]
+    getArtist(artistName, cb){
+        //verificar se o nome do artista é igual ao artista que ta no mock
+        //caso de erro
+        //caso de sucesso
+    }
+
+    getAlbums(artistName, cb) {
+        const returnedAlbums = albums[artistName]
         if (!returnedAlbums) {
-            cb({ code: 404 })
+            cb({ statusCode: 404 })
         } else {
             cb(null, returnedAlbums)
         }
     }
-}
 
-//Este objeto tem que conter a mesma organização e informação que tem o 
-//objeto trazido pelo pedido a web api last.fm
-const albums = { 
-    'Eminem': {
-        'albums': {
-            'Kamikaze': {
-                id: '35456',
-                title: 'Kamikaze',
-                year: '2018'
-            },
-            'Revival': {
-                id: '86253',
-                title: 'Revival',
-                year: '2017'
+    getAlbumsDetails(artistName, albumName, cb){
+        console.log(artistName)
+            if(albumDetails!= null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName){
+                cb(null, albumDetails)
+            }
+            else{
+                cb({statusCode: 404})
             }
         }
-    },
-    'AndreMauroVidaLOKA': {
-        'albums': {}
-    }
 }
 
 module.exports = Yama
