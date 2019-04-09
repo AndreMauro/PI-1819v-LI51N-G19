@@ -1,15 +1,15 @@
 'use strict'
 
 const url = require('url')
-const Yama = require('./lib/yama-mock')
-//const Yama = require('./lib/yama-services')
+//const Yama = require('./lib/yama-mock')
+const Yama = require('./lib/yama-services')
 
 
 const es = {
     host: 'localhost',
     port: '9200',
     yama_index: 'playlists',
-    lastfm:'http://ws.audioscrobbler.com/2.0/?method=', 
+    lastfm_api:'http://ws.audioscrobbler.com/2.0/?method=', 
     apiKey: 'b77a32de4783768b503960440aa1740e' // might create another object or delete this
 }
 
@@ -36,7 +36,7 @@ module.exports = (app) => {
         console.log(`${Date()}: request to ${pathname}`)
 
         
-        var regex = /^\/yama\/artist\/+\w+\/Album+$/i
+        var regex = /^\/yama\/artist\/+\w+\/Albums+$/i
         if(method == 'GET' && regex.exec(req.url)){ //as rotas estão no readme do git
             let artistName = pathname.split('/')[3]
             if(artistName == null) return false
@@ -56,13 +56,13 @@ module.exports = (app) => {
     }
 
     //Get the metadata and tracklist for an album on Last.fm using the album name or a musicbrainz id.
-    //http://localhost:3000/yama/artist/{artistName}/Album/{albumName}/getInfo
+    //http://localhost:3000/yama/artist/{artistName}/Album/{albumName}
     function getAlbumsDetails(req, resp){
         const {pathname} = url.parse(req.url, true)
         const method = req.method
 
         console.log(`${Date()}: request to ${pathname}`)
-        var regex = /^\/yama\/artist\/+\w+\/Album\/+\w+\/getInfo+$/i
+        var regex = /^\/yama\/artist\/+\w+\/Album\/+\w+$/i
         if(method == 'GET' && regex.exec(req.url)){
             let artistName = pathname.split('/')[3]
             let albumName = pathname.split('/')[5]

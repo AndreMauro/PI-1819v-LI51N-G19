@@ -1,7 +1,8 @@
 'use strict'
-const albumDetails = require('./yama-album-details-mock')
-const albums = require('./yama-albums-mock')
 const artist = require('./yama-artist-mock')
+const albums = require('./yama-albums-mock')
+const albumDetails = require('./yama-album-details-mock')
+
 
 class Yama {
 

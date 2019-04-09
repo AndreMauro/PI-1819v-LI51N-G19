@@ -1,6 +1,8 @@
 'use strict'
 
 const request = require('request')
+const LastfmData = require('../last.fm-data')
+const YamaDb = require('../yama-db')
 
 //Modulo onde estão todos os serviços
 class Yama {
@@ -9,37 +11,27 @@ class Yama {
      * @param {{host: string, port: number, playlists_index: string}} es 
      */
     constructor(es){  //es => ElasticSearch
-        this.playlists = `http://${es.host}:${es.port}/${es.playlists_index}/playlist`
+       // this.yamadb = YamaDb.init(es)
+        this.lastfm = LastfmData.init(es)
+        //this.playlists = `http://${es.host}:${es.port}/${es.playlists_index}/playlist`
+
     }
     /**
      * @param {{host: string, port: number, playlists_index: string}} es 
      */
     static init(es) {
+        console.log('23 Services es ' + JSON.stringify(es))
         return new Yama(es)
     }
 
     getArtists() { 
-        const uri 
-        request.get(uri, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb))
-                cb(null, body)
-        })
     }
 
     getAlbums() {
-        const uri
-        request.get(uri, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb))
-                cb(null, body)
-        })
     }
 
-    getAlbumsDetails() {
-        const uri
-        request.get(uri, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb))
-                cb(null, body)
-        })
+    getAlbumsDetails(artistName, albumName, cb) {
+        this.lastfm.getAlbumDetail(artistName, albumName, cb)
     }
 
 }
