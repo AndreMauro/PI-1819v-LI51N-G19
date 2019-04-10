@@ -40,6 +40,7 @@ module.exports = (app) => {
         if(method == 'GET' && regex.exec(req.url)){ //as rotas estão no readme do git
             let artistName = pathname.split('/')[3]
             if(artistName == null) return false
+            
             yama.getAlbums(artistName, (err, albums) => { 
                 if(err) {
                     resp.statusCode = err.statusCode

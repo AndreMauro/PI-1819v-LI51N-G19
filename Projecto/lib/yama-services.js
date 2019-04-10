@@ -27,7 +27,8 @@ class Yama {
     getArtists() { 
     }
 
-    getAlbums() {
+    getAlbums(artistNanem, cb) {
+        this.lastfm.getAlbums(artistNanem, cb)
     }
 
     getAlbumsDetails(artistName, albumName, cb) {

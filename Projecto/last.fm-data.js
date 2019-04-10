@@ -22,6 +22,30 @@ class LastfmData {
 //http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=Eminem&api_key=b77a32de4783768b503960440aa1740e&format=json
     getAlbums(artistName, cb){
         let method = 'artist.gettopalbums'
+        const options = {
+            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&api_key=${this.api_key}&format=json`,
+        }
+
+        request.get(options , (err, res, body) => {
+            if(!reportError(200, err, res, body, cb)){
+
+                body = JSON.parse(body)
+                var albums = (body["topalbums"])["album"]
+                var retAlbums = []
+                albums.forEach(element => {
+                    var album = new Object()
+                    album.Name = element["name"]
+                    album.Url = element["url"]
+                    album.Playcount = element["playcount"]
+                    element["image"].forEach(img => {
+                        if(img["size"] == 'extralarge')
+                        album.Image = img["#text"]
+                    })
+                    retAlbums.push(album)
+                });
+                cb(null, retAlbums)
+            }
+        })
     }
 
 //http://ws.audioscrobbler.com/2.0/?method=album.getInfo&artist=Djodje&album=FeedBack&api_key=b77a32de4783768b503960440aa1740e&format=json
