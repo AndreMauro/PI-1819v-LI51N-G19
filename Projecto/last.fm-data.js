@@ -28,6 +28,7 @@ class LastfmData {
     getAlbumDetail(artistName, albumName, cb){
         let method = 'album.getInfo'
         const options = {
+            'method': 'GET',
             'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&album=${albumName}&api_key=${this.api_key}&format=json`,
 
         }
