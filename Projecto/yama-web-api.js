@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-//const Yama = require('./lib/yama-mock')
-const Yama = require('./lib/yama-services')
+const Yama = require('./lib/yama-mock')
+//const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -10,7 +10,7 @@ const es = {
     port: '9200',
     yama_index: 'playlists',
     lastfm_api:'http://ws.audioscrobbler.com/2.0/?method=', 
-    apiKey: 'b77a32de4783768b503960440aa1740e' // might create another object or delete this
+    apiKey: 'b77a32de4783768b503960440aa1740e' 
 }
 
 const yama = Yama.init(es)
@@ -68,9 +68,6 @@ module.exports = (app) => {
             let artistName = pathname.split('/')[3]
             let albumName = pathname.split('/')[5]
 
-            console.log('Album? ' + albumName)
-            console.log('Artista? '+ artistName)
-            
             yama.getAlbumsDetails(artistName, albumName, (err, data)=> {
                 if(err){
                     resp.statusCode = err.statusCode
@@ -79,11 +76,10 @@ module.exports = (app) => {
                     resp.statusCode = 200
                     resp.end(JSON.stringify(data))
                 }
-                return true
-            
             })
-            return false
+            return true
         }
+        return false
     }
 
     function resourceNotFond(req, resp) {

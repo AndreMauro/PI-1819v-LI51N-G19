@@ -28,7 +28,7 @@ class Yama {
     getAlbumsDetails(artistName, albumName, cb){
         console.log(artistName)
             if(albumDetails!= null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName){
-                cb(null, albumDetails)
+                cb(null, albumDetails.album)
             }
             else{
                 cb({statusCode: 404})

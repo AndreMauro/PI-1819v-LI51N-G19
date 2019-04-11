@@ -4,8 +4,6 @@ const request = require('request')
 
 class LastfmData {
     constructor(es){
-        
-        console.log('8 lastfmData init es ' + JSON.stringify(es))
         this.lastfmDataApi = es.lastfm_api
         this.api_key = es.apiKey
     }
@@ -51,19 +49,37 @@ class LastfmData {
 //http://ws.audioscrobbler.com/2.0/?method=album.getInfo&artist=Djodje&album=FeedBack&api_key=b77a32de4783768b503960440aa1740e&format=json
     getAlbumDetail(artistName, albumName, cb){
         let method = 'album.getInfo'
+
         const options = {
             'method': 'GET',
             'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&album=${albumName}&api_key=${this.api_key}&format=json`,
 
         }
-        console.log('lastfm getalbumdetais')
 
-        console.log('option ' + JSON.stringify(options))
         request.get(options , (err, res, body) => {
             if(!reportError(200, err, res, body, cb)){
-
                 body = JSON.parse(body)
-                cb(null, body)
+                const albumDetail = {"name": body.album.name,
+                                     "artist": body.album.name}
+                
+                body.album["image"].forEach(img => {
+                    if(img["size"] == 'extralarge')
+                    albumDetail.Image = img["#text"]
+                })
+                
+                albumDetail.tracks = []
+                body.album.tracks.track.forEach( music => {
+                    let musicDetails =
+                    {
+                        "name": music.name,
+                        "duration": music.duration,
+                        "rank" : music["@attr"].rank
+                    }
+                    
+                    albumDetail.tracks.push(musicDetails)
+                })
+                
+                cb(null, albumDetail)
             }
         })
     }
@@ -72,7 +88,6 @@ class LastfmData {
 
 function reportError(statusOk, err, res, body, cb) {
     if(err) {
-        console.log('44 err ' +err)
         cb(err)
         return true
     }
@@ -85,7 +100,7 @@ function reportError(statusOk, err, res, body, cb) {
         return true
     }
 }
-//
+
 module.exports = LastfmData
 
 

@@ -20,7 +20,6 @@ class Yama {
      * @param {{host: string, port: number, playlists_index: string}} es 
      */
     static init(es) {
-        console.log('23 Services es ' + JSON.stringify(es))
         return new Yama(es)
     }
 
