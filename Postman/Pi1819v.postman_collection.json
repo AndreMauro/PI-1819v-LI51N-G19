@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "a780b5f0-ec26-49f2-82a5-a673754d10b6",
+		"name": "Pi1819v",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAlbumsDetail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "449aea0c-8229-4a9d-aa62-8a548348f1b6",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Your albumName\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"Feedback\");",
+							"});",
+							"",
+							"pm.test(\"Your to have a property Tracks\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.a.property('tracks');",
+							"});",
+							"",
+							"pm.test(\"First track name is\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.tracks[0].name).to.eql('Nha Musica');",
+							"});",
+							"pm.test(\"Last track name is\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.tracks[10].name).to.eql('Um Segundo (feat. Ferro Gaita)');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/artist/Djodje/Album/Feedback",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"artist",
+						"Djodje",
+						"Album",
+						"Feedback"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
