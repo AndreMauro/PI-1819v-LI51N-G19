@@ -19,6 +19,22 @@ module.exports = (app) => {
     app.use( getArtist)
     app.use(getAlbums)
     app.use(getAlbumsDetails)
+    app.use(createPlaylist) // post
+    app.use(editPlaylist)   //put
+    app.use(getPlaylistById) //singlePlaylist
+    app.use(getPlaylists) //allPlaylists
+    app.use(insertMusic)
+    app.use(deleteMusic)
+
+   /* Gerir playlists (listas de músicas favoritas):
+    Criar, atribuindo-lhe um nome e descrição
+    Editar, alterando o seu nome e descrição
+    Listar
+    Obter os detalhes, onde consta: o nome, descrição, total de tempo das músicas que o constituem e os detalhes de cada música (nome e duração).
+    Adicionar uma música
+    Remover uma música*/
+
+
     app.use(resourceNotFond)
     return app
 
@@ -72,6 +88,141 @@ module.exports = (app) => {
                 if(err){
                     resp.statusCode = err.statusCode
                     resp.end()
+                }else{
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+    function createPlaylist(req, resp) {
+        const uri = url.parse(req.url, true)
+        const {name, description} = req.body
+        const method = req.method
+        console.log('URL ' + req.url)
+        var regex = /^\/yama\/playlists\/+$/i
+        
+        if (method == 'POST' && regex.exec(req.url)) { //faz match
+          yama.createPlaylist(name, description, (err, data) => {
+                if (err) {
+                    resp.statusCode = err.code
+                    resp.end()
+                } else {
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+
+    function editPlaylist(req, resp) {
+        const {pathname, query} = url.parse(req.url, true)
+        const method = req.method
+
+        var regex = /^\/yama\/playlists\/+\d+$/i
+
+        console.log('URL ' + req.url)
+        console.log('REQ BODY ' + req.body)
+        const {name, description} = req.body
+        if (method == 'PUT' && regex.exec(req.url)){
+            let id = pathname.split('/')[2]
+            
+            yama.editPlaylist(id, name, description, (err, data) => {
+                if(err){
+                    resp.statusCode = err.code.resp.end()
+                }else{
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            } )
+            return true
+        }
+        return false
+    }
+
+    function getPlaylistById(req, resp) {
+        const uri = url.parse(req.url, true)
+        const {pathname} = uri
+        const method = req.method
+        console.log('URL ' + req.url)
+        let id = pathname.split('/')[3]
+        var regex = /^\/yama\/playlists\/+\d+$/i
+        
+        if (method == 'GET' && regex.exec(req.url)) {
+          yama.getPlaylistById(id, (err, data) => {
+                if (err) {
+                    resp.statusCode = err.code
+                    resp.end()
+                } else {
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+    function getPlaylists(req, resp) {
+        const {pathname} = url.parse(req.url, true)
+        const method = req.method
+         var regex = /^\/yama\/playlists\/+$/i
+         if (method == 'GET' && regex.exec(pathname)) {
+            
+            yama.getPlaylists((err, data) => {
+                if (err) {
+                    resp.statusCode = err
+                        .code
+                        resp
+                        .end()
+                } else {
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+    function insertMusic(req, resp) {
+        
+        const {pathname} = url.parse(req.url, true)
+        const method = req.method
+       
+        var regex = /^\/yama\/playlist\/+$/i //TODO DEFINIR ROTA
+     
+        if (method == 'POST' && regex.exec(req.url)){
+            console.log('inside insertteamingroup');
+            yama.insertMusic(parameters, (err, data) => {
+                if(err){
+                    resp.statusCode = err.code.resp.end()
+                }else{
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+    function deleteMusic(req, resp) {
+        const uri = url.parse(req.url, true)
+        const {pathname, query} = uri
+        const method = req.method
+        var regex = /^\/yama\/playlist\/+$/i //TODO DEFINIR ROTA
+    
+        if (method == 'DELETE' && regex.exec(req.url)) {
+            yama.deleteMusic(something, (err,data) => {
+                if(err){
+                    resp.statusCode = err.code.resp.end()
                 }else{
                     resp.statusCode = 200
                     resp.end(JSON.stringify(data))
