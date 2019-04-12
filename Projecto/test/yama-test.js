@@ -21,6 +21,7 @@ describe('test yama', () => {
         done()
     })
 
+    //#region getAlbumsDetails
     it('Should get a detail info of an album called Feedback from Djodje ', done => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbumsDetails('Djodje', 'Feedback', (err, album) =>{
@@ -45,25 +46,9 @@ describe('test yama', () => {
             done()
         }) 
       })
-
-   /*it('should get teams by competition id', done => {
-        const focaaux = foca.init(es)
-        focaaux
-            .getTeamsByCompetitionId('2000')
-            .then( resp => {
-                    should.exist(resp)
-                    expect(resp)
-                    .to.be.have.a.property('teams')
-                    .with
-                    .length(32)
-                expect(resp.teams[0])
-                    .to.have.a
-                    .property('id', 758)
-                    done()
-                })
-            
-    })*/
-
+      //#endregion getAlbumsDetails
+      
+    //#region  getAlbums
     it('Should get the 3 top albums for Eminem', done => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbums('Eminem', (err, album) =>{
@@ -135,4 +120,5 @@ describe('test yama', () => {
             .and.have.a.property('name', 'Achtung Baby')
         }) 
       })
+      //#endregion
 })
