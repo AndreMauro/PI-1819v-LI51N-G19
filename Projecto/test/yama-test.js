@@ -63,4 +63,76 @@ describe('test yama', () => {
                 })
             
     })*/
+
+    it('Should get the 3 top albums for Eminem', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('Eminem', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .with.length(3)
+        }) 
+      })
+
+      it('The first returned album for Eminem should be Recovery', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('Eminem', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .and.have.a.property('name', 'Recovery')
+        }) 
+      })
+
+      it('The second returned album for Eminem should be The Eminem Show', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('Eminem', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .and.have.a.property('name', 'The Eminem Show')
+        }) 
+      })
+
+      it('Should get the 3 top albums for U2', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('U2', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .with.length(3)
+        }) 
+      })
+
+      it('The second returned album for U2 should be All That You Can\'t Leave Behind', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('U2', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .and.have.a.property('name', 'All That You Can\'t Leave Behind')
+        }) 
+      })
+
+      it('The second returned album for U2 should be Achtung Baby', done => {
+        const yamaInit = yama.init(es)
+        yamaInit.getAlbums('U2', (err, album) =>{
+            should.exist(album)
+            expect(album)
+            .to
+            .be
+            .an('object')
+            .and.have.a.property('name', 'Achtung Baby')
+        }) 
+      })
 })
