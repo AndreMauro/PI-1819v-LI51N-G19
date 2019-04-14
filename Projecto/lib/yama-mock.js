@@ -14,6 +14,16 @@ class Yama {
         //verificar se o nome do artista é igual ao artista que ta no mock
         //caso de erro
         //caso de sucesso
+        console.log(artistName)
+        var artistrsult = artist.artist.filter( function(item){return (
+            item.name.includes(  artistName));
+        } );
+            if(artistrsult.length>0){
+                cb(null, artistrsult)
+            }
+            else{
+                cb({statusCode: 404})
+            }
     }
 
     getAlbums(artistName, cb) {

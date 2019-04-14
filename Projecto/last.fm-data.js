@@ -15,7 +15,33 @@ class LastfmData {
 //http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b77a32de4783768b503960440aa1740e&format=json
     getArtist(artistName, cb){
         let method = 'artist.search'
-    }
+
+        const options= {
+            'method': 'GET',
+            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&api_key=${this.api_key}&format=json`,
+
+        }
+        request.get(options, (err, res, body) =>{
+            if(!reportError(200, err, res, body, cb)){
+
+                body = JSON.parse(body) 
+                var artists=body.results.artistmatches.artist
+                var retArtists= []
+                artists.forEach(element => {
+                    var artist= new Object()
+                    artist.name = element.name
+                    artist.listeners = element.listeners
+                    artist.mbid = element.mbid
+
+        
+                retArtists.push(artist)
+            });
+            cb(null,retArtists)
+        }
+    })
+}
+
+   
 
 //http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=Eminem&api_key=b77a32de4783768b503960440aa1740e&format=json
     getAlbums(artistName, cb){
@@ -23,6 +49,7 @@ class LastfmData {
         const options = {
             'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&api_key=${this.api_key}&format=json`,
         }
+        
 
         request.get(options , (err, res, body) => {
             if(!reportError(200, err, res, body, cb)){

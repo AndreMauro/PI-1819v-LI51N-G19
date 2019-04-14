@@ -21,6 +21,39 @@ describe('test yama', () => {
         done()
     })
 
+    //#region getArtist
+    it('Should get artist Pink', done => {
+        const yamaInit = yama.init.es
+      yamaInit.getArtist('Pink', (err, artist) =>{
+        should.exist(artist)
+        expect(artist)
+        .to
+        .be
+        .an('object')
+        .and.have.a.property('name', 'Pink Floyd')
+        done()  
+      } )
+    })
+
+    it('Should fourth artist', done => {
+      const yamaInit = yama.init.es
+      yamaInit.getArtist('Pink Martini', (err, artist) =>{
+        should.exist(artist)
+        expect(artist)
+        .to
+        .be
+        .an('object')
+        .and.have.a.property('name', 'Pink Martini')
+        done()  
+      } )
+    })
+      
+    
+
+
+    //#endregion getArtist
+    
+
     //#region getAlbumsDetails
     it('Should get a detail info of an album called Feedback from Djodje ', done => {
         const yamaInit = yama.init(es)

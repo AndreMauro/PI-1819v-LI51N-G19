@@ -23,7 +23,8 @@ class Yama {
         return new Yama(es)
     }
 
-    getArtists() { 
+    getArtist(artistName, cb) { 
+        this.lastfm.getArtist(artistName, cb)
     }
 
     getAlbums(artistNanem, cb) {
