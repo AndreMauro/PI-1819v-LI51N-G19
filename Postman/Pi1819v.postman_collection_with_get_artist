@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "a1028b2d-5bd8-4ac5-b7e6-a98f8b819a0d",
+		"name": "Pi1819v",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAlbumsDetail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "449aea0c-8229-4a9d-aa62-8a548348f1b6",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Your albumName\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"Feedback\");",
+							"});",
+							"",
+							"pm.test(\"Your to have a property Tracks\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.a.property('tracks');",
+							"});",
+							"",
+							"pm.test(\"First track name is\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.tracks[0].name).to.eql('Nha Musica');",
+							"});",
+							"pm.test(\"Last track name is\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.tracks[10].name).to.eql('Um Segundo (feat. Ferro Gaita)');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/artist/Djodje/Album/Feedback",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"artist",
+						"Djodje",
+						"Album",
+						"Feedback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Artists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95f309a7-b69c-4cdb-9ad1-1f1437c2b69a",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"First element is Pink\", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData[0].name).to.eql('Pink Floyd');",
+							"});",
+							"",
+							"pm.test(\"Second element is Pink\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[1].name).to.eql('Pink');",
+							"});",
+							"",
+							"pm.test(\"Your to have a property listeners\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.a.property('listeners')",
+							"});",
+							"pm.test(\"Your to have a property mbid\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[3]).to.have.a.property('mbid')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/searchArtist?artistName=Pink",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"searchArtist"
+					],
+					"query": [
+						{
+							"key": "artistName",
+							"value": "Pink"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
