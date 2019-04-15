@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a1028b2d-5bd8-4ac5-b7e6-a98f8b819a0d",
-		"name": "Pi1819v",
+		"_postman_id": "af56ad50-b619-4d37-aa21-0cd08cf9b642",
+		"name": "Pi1819v copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -128,6 +128,67 @@
 							"value": "Pink"
 						}
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create ES index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getES index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/playlists_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"playlists_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePlaylist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

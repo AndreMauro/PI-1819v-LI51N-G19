@@ -11,7 +11,7 @@ class Yama {
      * @param {{host: string, port: number, playlists_index: string}} es 
      */
     constructor(es){  //es => ElasticSearch
-       // this.yamadb = YamaDb.init(es)
+        this.YamaDb = YamaDb.init(es)
         this.lastfm = LastfmData.init(es)
         //this.playlists = `http://${es.host}:${es.port}/${es.playlists_index}/playlist`
 
@@ -33,6 +33,11 @@ class Yama {
 
     getAlbumsDetails(artistName, albumName, cb) {
         this.lastfm.getAlbumDetail(artistName, albumName, cb)
+    }
+
+    createPlaylist(name, description, cb) {
+        this.YamaDb.createPlaylist(name, description, cb)
+
     }
 
 }

@@ -23,34 +23,32 @@ describe('test yama', () => {
 
     //#region getArtist
     it('Should get artist Pink', done => {
-        const yamaInit = yama.init.es
-      yamaInit.getArtist('Pink', (err, artist) =>{
-        should.exist(artist)
-        expect(artist)
+        const yamaInit = yama.init(es)
+      yamaInit.getArtist('Pink', (err, data) =>{
+        should.exist(data)
+        expect(data[1])
+        .to
+        .be
+        .an('object')
+        .and.have.a.property('name', 'Pink')
+        done()  
+      } )
+    })
+
+    it('Fourth artistName should be Pink Floyd', done => {
+      const yamaInit = yama.init(es)
+      yamaInit.getArtist('Pink Floyd', (err, data) =>{
+        should.exist(data)
+        expect(data[0])
         .to
         .be
         .an('object')
         .and.have.a.property('name', 'Pink Floyd')
-        done()  
+        done()
       } )
     })
 
-    it('Should fourth artist', done => {
-      const yamaInit = yama.init.es
-      yamaInit.getArtist('Pink Martini', (err, artist) =>{
-        should.exist(artist)
-        expect(artist)
-        .to
-        .be
-        .an('object')
-        .and.have.a.property('name', 'Pink Martini')
-        done()  
-      } )
-    })
-      
     
-
-
     //#endregion getArtist
     
 
@@ -155,3 +153,4 @@ describe('test yama', () => {
       })
       //#endregion
 })
+ 
