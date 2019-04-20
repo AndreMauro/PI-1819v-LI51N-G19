@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-//const Yama = require('./lib/yama-mock')
-const Yama = require('./lib/yama-services')
+const Yama = require('./lib/yama-mock')
+//const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -112,7 +112,8 @@ module.exports = (app) => {
             yama.getAlbumsDetails(artistName, albumName, (err, data)=> {
                 if(err){
                     resp.statusCode = err.statusCode
-                    resp.end()
+                    resp.end('err')
+                   // resp.end(JSON.stringify({'statusCode' :resp.statusCode}))  
                 }else{
                     resp.statusCode = 200
                     resp.end(JSON.stringify(data))

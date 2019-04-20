@@ -2,8 +2,8 @@
 const expect = require('chai').expect
 const assert = require('chai').assert
 const should = require('chai').should()
-//const yama = require('../lib/yama-mock.js')
-const yama = require('../lib/yama-services')
+const yama = require('../lib/yama-mock.js')
+//const yama = require('../lib/yama-services')
 
 describe('test yama', () => {
     const es = {
