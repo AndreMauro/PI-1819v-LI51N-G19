@@ -2,8 +2,8 @@
 const expect = require('chai').expect
 const assert = require('chai').assert
 const should = require('chai').should()
-const yama = require('../lib/yama-mock.js')
-//const yama = require('../lib/yama-services')
+//const yama = require('../lib/yama-mock.js')
+const yama = require('../lib/yama-services')
 
 describe('test yama', () => {
     const es = {
@@ -87,8 +87,9 @@ describe('test yama', () => {
             expect(album)
             .to
             .be
-            .an('object')
-            .with.length(3)
+            .an('Array')
+            expect(album).to.have.lengthOf(3)
+            done()
         }) 
       })
 
@@ -96,11 +97,12 @@ describe('test yama', () => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbums('Eminem', (err, album) =>{
             should.exist(album)
-            expect(album)
+            expect(album[0])
             .to
             .be
-            .an('object')
+            .an('Object')
             .and.have.a.property('name', 'Recovery')
+            done()
         }) 
       })
 
@@ -108,11 +110,12 @@ describe('test yama', () => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbums('Eminem', (err, album) =>{
             should.exist(album)
-            expect(album)
+            expect(album[1])
             .to
             .be
             .an('object')
             .and.have.a.property('name', 'The Eminem Show')
+            done()
         }) 
       })
 
@@ -123,20 +126,22 @@ describe('test yama', () => {
             expect(album)
             .to
             .be
-            .an('object')
-            .with.length(3)
+            .an('Array')
+            expect(album).to.have.lengthOf(3)
+            done()
         }) 
       })
 
-      it('The second returned album for U2 should be All That You Can\'t Leave Behind', done => {
+      it('The first returned album for U2 should be All That You Can\'t Leave Behind', done => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbums('U2', (err, album) =>{
             should.exist(album)
-            expect(album)
+            expect(album[0])
             .to
             .be
             .an('object')
             .and.have.a.property('name', 'All That You Can\'t Leave Behind')
+            done()
         }) 
       })
 
@@ -144,11 +149,12 @@ describe('test yama', () => {
         const yamaInit = yama.init(es)
         yamaInit.getAlbums('U2', (err, album) =>{
             should.exist(album)
-            expect(album)
+            expect(album[1])
             .to
             .be
             .an('object')
             .and.have.a.property('name', 'Achtung Baby')
+            done()
         }) 
       })
       //#endregion

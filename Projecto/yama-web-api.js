@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-const Yama = require('./lib/yama-mock')
-//const Yama = require('./lib/yama-services')
+//const Yama = require('./lib/yama-mock')
+const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -19,7 +19,7 @@ module.exports = (app) => {
     app.use(getArtist)
     app.use(getAlbums)
     app.use(getAlbumsDetails)
-    app.use(createPlaylist) // post
+   /* app.use(createPlaylist) // post
     app.use(editPlaylist)   //put
     app.use(getPlaylistById) //singlePlaylist
     app.use(getPlaylists) //allPlaylists
@@ -113,7 +113,6 @@ module.exports = (app) => {
                 if(err){
                     resp.statusCode = err.statusCode
                     resp.end('err')
-                   // resp.end(JSON.stringify({'statusCode' :resp.statusCode}))  
                 }else{
                     resp.statusCode = 200
                     resp.end(JSON.stringify(data))
@@ -123,7 +122,8 @@ module.exports = (app) => {
         }
         return false
     }
-
+    
+    //http://localhost:9200/playlists
     function createPlaylist(req, resp) {
         const uri = url.parse(req.url, true)
         const {name, description} = req.body
@@ -146,7 +146,7 @@ module.exports = (app) => {
         return false
     }
 
-
+    //http://localhost:9200/playlists
     function editPlaylist(req, resp) {
         const {pathname, query} = url.parse(req.url, true)
         const method = req.method
@@ -172,6 +172,7 @@ module.exports = (app) => {
         return false
     }
 
+    //http://localhost:9200/playlists/{playlistId}
     function getPlaylistById(req, resp) {
         const uri = url.parse(req.url, true)
         const {pathname} = uri
@@ -195,6 +196,7 @@ module.exports = (app) => {
         return false
     }
 
+    //http://localhost:9200/playlists
     function getPlaylists(req, resp) {
         const {pathname} = url.parse(req.url, true)
         const method = req.method
@@ -217,6 +219,7 @@ module.exports = (app) => {
         return false
     }
 
+    //http://localhost:9200/playlists/{playlistName}
     function insertMusic(req, resp) {
         
         const {pathname} = url.parse(req.url, true)
@@ -239,6 +242,7 @@ module.exports = (app) => {
         return false
     }
 
+    //http://localhost:9200/playlists/?playlistName={playlistName}&music={mbdi}
     function deleteMusic(req, resp) {
         const uri = url.parse(req.url, true)
         const {pathname, query} = uri
@@ -264,4 +268,5 @@ module.exports = (app) => {
         resp.end('Resource Not Found!')
         return true
     }
+
 }
