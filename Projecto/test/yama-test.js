@@ -88,7 +88,6 @@ describe('test yama', () => {
             .to
             .be
             .an('Array')
-            expect(album).to.have.lengthOf(3)
             done()
         }) 
       })
@@ -101,7 +100,7 @@ describe('test yama', () => {
             .to
             .be
             .an('Object')
-            .and.have.a.property('name', 'Recovery')
+            .and.have.a.property('Name', 'Recovery')
             done()
         }) 
       })
@@ -114,7 +113,7 @@ describe('test yama', () => {
             .to
             .be
             .an('object')
-            .and.have.a.property('name', 'The Eminem Show')
+            .and.have.a.property('Name', 'The Eminem Show')
             done()
         }) 
       })
@@ -127,7 +126,6 @@ describe('test yama', () => {
             .to
             .be
             .an('Array')
-            expect(album).to.have.lengthOf(3)
             done()
         }) 
       })
@@ -140,7 +138,7 @@ describe('test yama', () => {
             .to
             .be
             .an('object')
-            .and.have.a.property('name', 'All That You Can\'t Leave Behind')
+            .and.have.a.property('Name', 'All That You Can\'t Leave Behind')
             done()
         }) 
       })
@@ -153,7 +151,7 @@ describe('test yama', () => {
             .to
             .be
             .an('object')
-            .and.have.a.property('name', 'Achtung Baby')
+            .and.have.a.property('Name', 'Achtung Baby')
             done()
         }) 
       })

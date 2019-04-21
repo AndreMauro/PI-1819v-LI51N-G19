@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-//const Yama = require('./lib/yama-mock')
-const Yama = require('./lib/yama-services')
+const Yama = require('./lib/yama-mock')
+//const Yama = require('./lib/yama-services')
 
 
 const es = {
