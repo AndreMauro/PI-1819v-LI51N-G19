@@ -1,10 +1,129 @@
 {
 	"info": {
-		"_postman_id": "a780b5f0-ec26-49f2-82a5-a673754d10b6",
-		"name": "Pi1819v",
+		"_postman_id": "af56ad50-b619-4d37-aa21-0cd08cf9b642",
+		"name": "Pi1819v copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Get Artists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95f309a7-b69c-4cdb-9ad1-1f1437c2b69a",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"First element is Pink\", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData[0].name).to.eql('Pink Floyd');",
+							"});",
+							"",
+							"pm.test(\"Second element is Pink\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[1].name).to.eql('Pink');",
+							"});",
+							"",
+							"pm.test(\"Your to have a property listeners\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.a.property('listeners')",
+							"});",
+							"pm.test(\"Your to have a property mbid\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[3]).to.have.a.property('mbid')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/searchArtist?artistName=Pink",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"searchArtist"
+					],
+					"query": [
+						{
+							"key": "artistName",
+							"value": "Pink"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ArtisteTopAlbums",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ee9e3f7-878b-484a-85d6-c67016c9d966",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"FirstAlbumName is Recovery and was played 27401482 times\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].name).to.eql(\"Recovery\");",
+							"   // pm.expect(jsonData[0].playcount).to.eql(27401482);",
+							"});",
+							"",
+							"pm.test(\"ThirdsAlbumName is The Marshall Mathers LP and was played 13527566 times\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[2].name).to.eql(\"The Marshall Mathers LP\");",
+							"    //pm.expect(jsonData[2].playcount).to.eql(13527566);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/artist/{{artistName2}}/Albums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"artist",
+						"{{artistName2}}",
+						"Albums"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "GetAlbumsDetail",
 			"event": [
@@ -50,7 +169,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:3000/yama/artist/Djodje/Album/Feedback",
+					"raw": "http://localhost:3000/yama/artist/{{artistName3}}/Album/{{albumName3}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -59,10 +178,71 @@
 					"path": [
 						"yama",
 						"artist",
-						"Djodje",
+						"{{artistName3}}",
 						"Album",
-						"Feedback"
+						"{{albumName3}}"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create ES index",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getES index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9200/playlists_search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"playlists_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePlaylist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
