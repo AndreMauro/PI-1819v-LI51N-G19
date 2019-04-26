@@ -2,7 +2,7 @@ const request = require('request')
 
 class YamaDB {
 
-    construtor(es){
+    constructor(es){
         this.yamaUrl = `http://${es.host}:${es.port}/${es.yama_index}`
         this.playlist = `http://${es.host}:${es.port}/${es.yama_index}/playlist`
     }
@@ -14,17 +14,19 @@ class YamaDB {
     //
     createPlaylist(name, description, cb){
         const options = {
-            'uri': `${this.playlistUrl}`,
+            'uri': `${this.playlist}`,
             'json': true,
             'body': {'name': name,
-                    'descripton': descripton,
+                    'descripton': description,
                     'musics': [] 
                 }
         }
         request.post(options, (err, res, body, cb) =>{
             if(!reportError(201, err, res, body, cb)){
                 cb(null,{"id":body._id}) 
+                return true
         }
+        return false
     })
 
     }

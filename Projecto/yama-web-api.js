@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-const Yama = require('./lib/yama-mock')
-//const Yama = require('./lib/yama-services')
+//const Yama = require('./lib/yama-mock')
+const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -19,8 +19,8 @@ module.exports = (app) => {
     app.use(getArtist)
     app.use(getAlbums)
     app.use(getAlbumsDetails)
-   /* app.use(createPlaylist) // post
-    app.use(editPlaylist)   //put
+    app.use(createPlaylist) // post
+   /*  app.use(editPlaylist)   //put
     app.use(getPlaylistById) //singlePlaylist
     app.use(getPlaylists) //allPlaylists
     app.use(insertMusic)
@@ -87,7 +87,6 @@ module.exports = (app) => {
                     resp.statusCode = err.statusCode
                     resp.end()
                 } else {
-                    console.log(JSON.stringify(albums))
                     resp.statusCode = 200
                     resp.end(JSON.stringify(albums))
                 }
@@ -126,13 +125,13 @@ module.exports = (app) => {
     //http://localhost:9200/playlists
     function createPlaylist(req, resp) {
         const uri = url.parse(req.url, true)
-        const {name, description} = req.body
         const method = req.method
-        console.log('URL ' + req.url)
-        var regex = /^\/yama\/playlists\/+$/i
+        var regex = /^\/yama\/playlists+$/i
         
         if (method == 'POST' && regex.exec(req.url)) { //faz match
-          yama.createPlaylist(name, description, (err, data) => {
+
+        bodyRequestFunction(req, body => {
+            yama.createPlaylist(body.name, body.description, (err, data) => {
                 if (err) {
                     resp.statusCode = err.code
                     resp.end()
@@ -141,9 +140,8 @@ module.exports = (app) => {
                     resp.end(JSON.stringify(data))
                 }
             })
-            return true
+        })
         }
-        return false
     }
 
     //http://localhost:9200/playlists
@@ -263,6 +261,16 @@ module.exports = (app) => {
         return false
     }
 
+    //bodyRequestFunction
+    function bodyRequestFunction(req, cb){
+        let body = [];
+        req.on('data', (chunk) => {
+            body.push(chunk);
+        }).on('end', () => {
+             body = Buffer.concat(body).toString();
+             cb(JSON.parse(body))
+        });
+    }
     function resourceNotFond(req, resp) {
         resp.statusCode = 404
         resp.end('Resource Not Found!')
