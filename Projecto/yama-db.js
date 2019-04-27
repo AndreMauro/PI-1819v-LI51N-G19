@@ -17,20 +17,55 @@ class YamaDB {
             'uri': `${this.playlist}`,
             'json': true,
             'body': {'name': name,
-                    'descripton': description,
+                    'description': description,
                     'musics': [] 
                 }
         }
-        request.post(options, (err, res, body, cb) =>{
+        request.post(options, (err, res, body) =>{
             if(!reportError(201, err, res, body, cb)){
                 cb(null,{"id":body._id}) 
-                return true
-        }
-        return false
-    })
-
+            }
+         })
     }
+    
+    getPlaylistById(id,cb){
+        const uri = `${this.playlist}/${id}`
+        request.get(uri, (err, res, body) =>{
+            if(!reportError(200, err, res, body, cb)){
+                body = JSON.parse(body)   
+                let playlist = {}         
+                playlist.id = body._id
+                playlist.name = body._source.name
+                playlist.description = body._source.description
+                playlist.musics = body._source.musics
+                 
+                cb(null, playlist)
+            }
+        })
+    }
+
+    editPlaylist(id,name, description, cb){
+       this.getPlaylistById(id,(err, playlist) => {  
+			
+        playlist.name=name
+        playlist.description=description
+
+        const options = {
+            'uri': `${this.playlist}/${id}`,
+            'json': true,
+            'body': playlist
+        }
+        
+        request.put(options, (err, res, body) =>{
+            if(!reportError(200, err, res, body, cb))
+                cb(null, body)
+            })
+        })  
+    }
+
 }
+
+
 
   /*  // const uri= http://localhost:9200/yama/playlists/id
     editPlaylist(name, description, cb)

@@ -8,7 +8,7 @@ const Yama = require('./lib/yama-services')
 const es = {
     host: 'localhost',
     port: '9200',
-    yama_index: 'playlists',
+    yama_index: 'yama',
     lastfm_api:'http://ws.audioscrobbler.com/2.0/?method=', 
     apiKey: 'b77a32de4783768b503960440aa1740e' 
 }
@@ -20,8 +20,9 @@ module.exports = (app) => {
     app.use(getAlbums)
     app.use(getAlbumsDetails)
     app.use(createPlaylist) // post
-   /*  app.use(editPlaylist)   //put
-    app.use(getPlaylistById) //singlePlaylist
+    app.use(getPlaylistById)
+   app.use(editPlaylist)   //put
+    /*  app.use(getPlaylistById) //singlePlaylist
     app.use(getPlaylists) //allPlaylists
     app.use(insertMusic)
     app.use(deleteMusic)
@@ -127,7 +128,7 @@ module.exports = (app) => {
         const uri = url.parse(req.url, true)
         const method = req.method
         var regex = /^\/yama\/playlists+$/i
-        
+
         if (method == 'POST' && regex.exec(req.url)) { //faz match
 
         bodyRequestFunction(req, body => {
@@ -136,39 +137,16 @@ module.exports = (app) => {
                     resp.statusCode = err.code
                     resp.end()
                 } else {
-                    resp.statusCode = 200
+                    resp.statusCode = 201
                     resp.end(JSON.stringify(data))
                 }
             })
         })
-        }
-    }
-
-    //http://localhost:9200/playlists
-    function editPlaylist(req, resp) {
-        const {pathname, query} = url.parse(req.url, true)
-        const method = req.method
-
-        var regex = /^\/yama\/playlists\/+\d+$/i
-
-        console.log('URL ' + req.url)
-        console.log('REQ BODY ' + req.body)
-        const {name, description} = req.body
-        if (method == 'PUT' && regex.exec(req.url)){
-            let id = pathname.split('/')[2]
-            
-            yama.editPlaylist(id, name, description, (err, data) => {
-                if(err){
-                    resp.statusCode = err.code.resp.end()
-                }else{
-                    resp.statusCode = 200
-                    resp.end(JSON.stringify(data))
-                }
-            } )
-            return true
+        return true
         }
         return false
     }
+
 
     //http://localhost:9200/playlists/{playlistId}
     function getPlaylistById(req, resp) {
@@ -177,7 +155,7 @@ module.exports = (app) => {
         const method = req.method
         console.log('URL ' + req.url)
         let id = pathname.split('/')[3]
-        var regex = /^\/yama\/playlists\/+\d+$/i
+        var regex = /^\/yama\/playlists\/+\w+$/i
         
         if (method == 'GET' && regex.exec(req.url)) {
           yama.getPlaylistById(id, (err, data) => {
@@ -189,6 +167,30 @@ module.exports = (app) => {
                     resp.end(JSON.stringify(data))
                 }
             })
+            return true
+        }
+        return false
+    }
+
+    function editPlaylist(req, resp) {
+        const {pathname, query} = url.parse(req.url, true)
+        const method = req.method
+
+        var regex = /^\/yama\/playlists\/+\w+\?name=+\w+\&description=+\w+$/i
+
+        console.log('URL ' + req.url)
+        const {name, description} = query
+        if (method == 'PUT' && regex.exec(req.url)){
+            let id = pathname.split('/', 4)[3]
+            
+            yama.editPlaylist(id, name, description, (err, data) => {
+                if(err){
+                    resp.statusCode = err.code.resp.end()
+                }else{
+                    resp.statusCode = 200
+                    resp.end(JSON.stringify(data))
+                }
+            } )
             return true
         }
         return false

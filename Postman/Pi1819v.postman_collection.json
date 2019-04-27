@@ -6,6 +6,109 @@
 	},
 	"item": [
 		{
+			"name": "Reset yama",
+			"item": [
+				{
+					"name": "Delete YAMA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3b0c654-3df2-4bcd-a6f3-4df002699bee",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Acknowledge is true \", function () {",
+									"    var jsonData = pm.response.json();",
+									"     pm.expect(jsonData.acknowledged).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/yama/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"yama",
+								""
+							]
+						},
+						"description": "This command was made to remove all ES data after tests"
+					},
+					"response": []
+				},
+				{
+					"name": "Create YAMA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b47836b8-a92f-4488-aa86-88a31d217158",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Acknowledge is true \", function () {",
+									"    var jsonData = pm.response.json();",
+									"     pm.expect(jsonData.index).to.eql(\"yama\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:9200/yama/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"yama",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Get Artists",
 			"event": [
 				{
@@ -86,13 +189,13 @@
 							"",
 							"pm.test(\"FirstAlbumName is Recovery and was played 27401482 times\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData[0].name).to.eql(\"Recovery\");",
+							"    pm.expect(jsonData[0].Name).to.eql(\"Recovery\");",
 							"   // pm.expect(jsonData[0].playcount).to.eql(27401482);",
 							"});",
 							"",
 							"pm.test(\"ThirdsAlbumName is The Marshall Mathers LP and was played 13527566 times\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData[2].name).to.eql(\"The Marshall Mathers LP\");",
+							"    pm.expect(jsonData[2].Name).to.eql(\"The Marshall Mathers LP\");",
 							"    //pm.expect(jsonData[2].playcount).to.eql(13527566);",
 							"});"
 						],
@@ -102,7 +205,14 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -187,7 +297,112 @@
 			"response": []
 		},
 		{
-			"name": "Create ES index",
+			"name": "CreatePlaylist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5d53a0e-eb94-4191-8cfd-b8740b0a086e",
+						"exec": [
+							"//Okay",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"const jsonObject = JSON.parse(responseBody);",
+							"pm.environment.set(\"playListId\", jsonObject.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"test\",\n\t\"description\": \"testPlayLists\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get PlaylistById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52469b83-0576-4672-addc-e1b2eeda8eb4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Playlist name should be test \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.name).to.eql(\"test\");",
+							"});",
+							"",
+							"pm.test(\"Playlist description should be testPlayLists \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.description).to.eql(\"testPlayLists\");",
+							"});",
+							"",
+							"pm.test(\"Playlist musics  should be empty \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.musics.length).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"playlists",
+						"{{playListId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit PlayList",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -196,14 +411,26 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9200/playlists",
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?name={{playListName}}&description={{playListdescription}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "9200",
+					"port": "3000",
 					"path": [
-						"playlists"
+						"yama",
+						"playlists",
+						"{{playListId}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{playListName}}"
+						},
+						{
+							"key": "description",
+							"value": "{{playListdescription}}"
+						}
 					]
 				}
 			},
@@ -219,30 +446,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9200/playlists_search",
+					"raw": "http://localhost:9200/_search",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9200",
 					"path": [
-						"playlists_search"
+						"_search"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreatePlaylist",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": ""
 				}
 			},
 			"response": []
