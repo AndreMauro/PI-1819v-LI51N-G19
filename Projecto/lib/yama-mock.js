@@ -46,6 +46,7 @@ class Yama {
                         'id': yamadb.playlists.length + 1,  //um id qualquer
                         'name': name,
                         'description': description,
+                        'duration': 0,
                         'musics': [] 
                          }
             yamadb.playlists.push(playlist)
@@ -58,6 +59,16 @@ class Yama {
         } else {
             cb(null, yamadb.playlists)
         }
+    }
+
+    getPlaylist(id, cb) {
+        yamadb.playlists
+        .forEach(element => {
+            if (element.id == id) {
+                cb(null, element)
+            }
+        })
+        cb({ code: 404 })
     }
 
     editPlaylist(id, name, description, cb) {
@@ -79,6 +90,7 @@ class Yama {
             .forEach(element => {
                 if (element.id == id) {
                     element.musics.push(music)
+                    element.duration += music.duration
                     musics = element.musics
                 }
             })
@@ -98,6 +110,7 @@ class Yama {
                     if (index > -1) {
                         element.musics.splice(index, 1);
                     }
+                    element.duration -= music.duration
                     musicList = element.musics
                 }
             })
