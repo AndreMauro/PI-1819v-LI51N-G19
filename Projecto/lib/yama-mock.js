@@ -10,16 +10,17 @@ class Yama {
         return new Yama()
     }
 
-    getArtist(artistName, cb){
-        var artistrsult = artist.artist.filter( function(item){return (
-            item.name.includes(  artistName));
-        } );
-            if(artistrsult.length>0){
-                cb(null, artistrsult)
-            }
-            else{
-                cb({statusCode: 404})
-            }
+    getArtist(artistName, cb) {
+        var artistrsult = artist.artist.filter(function (item) {
+            return (
+                item.name.includes(artistName));
+        });
+        if (artistrsult.length > 0) {
+            cb(null, artistrsult)
+        }
+        else {
+            cb({ statusCode: 404 })
+        }
     }
 
     getAlbums(artistName, cb) {
@@ -31,26 +32,26 @@ class Yama {
         }
     }
 
-    getAlbumsDetails(artistName, albumName, cb){
-            if(albumDetails!= null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName){
-                cb(null, albumDetails.album)
-            }
-            else{
-                cb({statusCode: 404})
-            }
+    getAlbumsDetails(artistName, albumName, cb) {
+        if (albumDetails != null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName) {
+            cb(null, albumDetails.album)
         }
+        else {
+            cb({ statusCode: 404 })
+        }
+    }
 
-    
-    createPlaylist(name, description, cb){
+
+    createPlaylist(name, description, cb) {
         const playlist = {
-                        'id': yamadb.playlists.length + 1,  //um id qualquer
-                        'name': name,
-                        'description': description,
-                        'duration': 0,
-                        'musics': [] 
-                         }
-            yamadb.playlists.push(playlist)
-            cb(null, playlist.id)
+            'id': yamadb.playlists.length + 1,  //um id qualquer
+            'name': name,
+            'description': description,
+            'duration': 0,
+            'musics': []
+        }
+        yamadb.playlists.push(playlist)
+        cb(null, playlist.id)
     }
 
     getPlaylists(cb) {
@@ -63,11 +64,11 @@ class Yama {
 
     getPlaylist(id, cb) {
         yamadb.playlists
-        .forEach(element => {
-            if (element.id == id) {
-                cb(null, element)
-            }
-        })
+            .forEach(element => {
+                if (element.id == id) {
+                    cb(null, element)
+                }
+            })
         cb({ code: 404 })
     }
 
@@ -102,14 +103,11 @@ class Yama {
         yamadb.playlists
             .forEach(element => {
                 if (element.id == id) {
-                    console.log(element.musics[0])
-                    console.log(music)
-                    console.log(element.musics[0] == music)
-                    var index = element.musics.indexOf(music);
-                    console.log(index)
-                    if (index > -1) {
-                        element.musics.splice(index, 1);
+                    var index = element.musics.findIndex(x => JSON.stringify(x) === JSON.stringify(music));
+                    if (index == -1) {
+                        cb({ code: 404 })
                     }
+                    element.musics.splice(index, 1);
                     element.duration -= music.duration
                     musicList = element.musics
                 }
@@ -118,7 +116,7 @@ class Yama {
     }
 
 
-        //TODO incluir os mocks do YamaDb-Mock
+    //TODO incluir os mocks do YamaDb-Mock
 }
 
 module.exports = Yama

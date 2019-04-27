@@ -269,7 +269,7 @@ describe('test yama', () => {
   //#endregion
 
   //#region removeMusic
-  /*it('Should remove one music to the playlist with id 1', done => {
+  it('Should remove one music to the playlist with id 1', done => {
     const yamaInit = yama.init(es)
     const music = {
       'name': 'some name',
@@ -285,11 +285,11 @@ describe('test yama', () => {
         .length(0)
       done()
     })
-  })*/
+  })
   //#endregion
 
   //#region getPlaylist
-  /*it('Should get the playlist with id 1', done => {
+  it('Should get the playlist with id 1', done => {
     const yamaInit = yama.init(es)
     yamaInit.getPlaylist(1, (err, playlist) => {
       should.exist(playlist)
@@ -305,7 +305,7 @@ describe('test yama', () => {
         .length(0)
       done()
     })
-  })*/
+  })
   //#endregion
   
 })
