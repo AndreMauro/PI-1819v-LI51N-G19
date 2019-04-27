@@ -63,27 +63,28 @@ class YamaDB {
         })  
     }
 
+    getPlaylists(cb){       
+        const uri = `${this.playlist}/_search`
+        request.get(uri, (err, res, body) =>{
+            if(!reportError(200, err, res, body, cb)){
+                body = JSON.parse(body)
+                body = body.hits.hits
+                let obj = {'playlists':[]}  // passing groups array to be consistent
+                body.forEach(p => {
+                    obj.playlists.push({
+                        'id':p._id,
+                        'name': p._source.name,
+                        'description':p._source.description,
+                        'musics': p._source.musics
+                    })
+                })
+                cb(null, obj)
+            } 
+         })
+    }
+
 }
 
-
-
-  /*  // const uri= http://localhost:9200/yama/playlists/id
-    editPlaylist(name, description, cb)
-    {
-        //TODO
-
-        const options = {
-            'uri': `${this.playlistUrl}/${id}`,
-            'json': true,
-            'body': data
-        }
-
-        request.put(options, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb))
-                cb(null, body)
-        })
-
-    }*/
 
  function reportError(statusOk, err, res, body, cb) {
         if(err) {

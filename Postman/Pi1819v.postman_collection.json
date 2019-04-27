@@ -437,7 +437,32 @@
 			"response": []
 		},
 		{
-			"name": "getES index",
+			"name": "GetAllPlaylists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d6534a6-b374-4839-8724-4466a1f4e177",
+						"exec": [
+							"pm.test(\"Test obtaining the playlists array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property(\"playlists\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test playlists if it is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"     pm.expect(jsonData.playlists).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -446,14 +471,16 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9200/_search",
+					"raw": "http://localhost:3000/yama/playlists/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "9200",
+					"port": "3000",
 					"path": [
-						"_search"
+						"yama",
+						"playlists",
+						""
 					]
 				}
 			},

@@ -2,7 +2,7 @@
 const artist = require('./yama-artist-mock')
 const albums = require('./yama-albums-mock')
 const albumDetails = require('./yama-album-details-mock')
-
+const yamadb = { "playlists": [] }
 
 class Yama {
 
@@ -11,15 +11,10 @@ class Yama {
     }
 
     getArtist(artistName, cb){
-        //verificar se o nome do artista é igual ao artista que ta no mock
-        //caso de erro
-        //caso de sucesso
-        //console.log(artistName)
         var artistrsult = artist.artist.filter( function(item){return (
             item.name.includes(  artistName));
         } );
             if(artistrsult.length>0){
-               // console.log('beforeCallBack ' + JSON.stringify(artistrsult))
                 cb(null, artistrsult)
             }
             else{
@@ -44,6 +39,33 @@ class Yama {
                 cb({statusCode: 404})
             }
         }
+
+    
+    createPlaylist(name, description, cb){
+        const playlist = {
+                        'id': 1,  //um id qualquer
+                        'name': name,
+                        'description': description,
+                        'musics': [] 
+                         }
+            yamadb.playlists.push(playlist)
+            cb(null, yamadb)
+    }
+
+    editPlaylist(id, cb){
+
+    }
+
+    getPlaylistByID(id, cb){
+
+    }
+
+    getAllPlaylists(cb){
+
+    }
+
+
+        //TODO incluir os mocks do YamaDb-Mock
 }
 
 module.exports = Yama

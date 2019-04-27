@@ -47,6 +47,9 @@ class Yama {
     editPlaylist(id, name, description, cb){
         this.YamaDb.editPlaylist(id,name, description, cb)
     }
+    getPlaylists(cb){
+        this.YamaDb.getPlaylists(cb)
+    }
 }
 
 function reportError(statusOk, err, res, body, cb) {

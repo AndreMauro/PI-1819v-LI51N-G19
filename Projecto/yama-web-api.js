@@ -20,11 +20,10 @@ module.exports = (app) => {
     app.use(getAlbums)
     app.use(getAlbumsDetails)
     app.use(createPlaylist) // post
-    app.use(getPlaylistById)
+    app.use(getPlaylistById) //singlePlaylist
    app.use(editPlaylist)   //put
-    /*  app.use(getPlaylistById) //singlePlaylist
     app.use(getPlaylists) //allPlaylists
-    app.use(insertMusic)
+    /*  app.use(insertMusic)
     app.use(deleteMusic)
 
    /* Gerir playlists (listas de músicas favoritas):
@@ -148,7 +147,7 @@ module.exports = (app) => {
     }
 
 
-    //http://localhost:9200/playlists/{playlistId}
+    //http://localhost:9200/yama/playlists/{playlistId}
     function getPlaylistById(req, resp) {
         const uri = url.parse(req.url, true)
         const {pathname} = uri
@@ -196,7 +195,7 @@ module.exports = (app) => {
         return false
     }
 
-    //http://localhost:9200/playlists
+    //http://localhost:3000/yama/playlists/
     function getPlaylists(req, resp) {
         const {pathname} = url.parse(req.url, true)
         const method = req.method
