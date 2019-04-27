@@ -43,25 +43,65 @@ class Yama {
     
     createPlaylist(name, description, cb){
         const playlist = {
-                        'id': 1,  //um id qualquer
+                        'id': yamadb.playlists.length + 1,  //um id qualquer
                         'name': name,
                         'description': description,
                         'musics': [] 
                          }
             yamadb.playlists.push(playlist)
-            cb(null, yamadb)
+            cb(null, playlist.id)
     }
 
-    editPlaylist(id, cb){
-
+    getPlaylists(cb) {
+        if (!yamadb.playlists) {
+            cb({ code: 404 })
+        } else {
+            cb(null, yamadb.playlists)
+        }
     }
 
-    getPlaylistByID(id, cb){
-
+    editPlaylist(id, name, description, cb) {
+        var playlist
+        yamadb.playlists
+            .forEach(element => {
+                if (element.id == id) {
+                    element.name = name
+                    element.description = description
+                    playlist = element
+                }
+            })
+        cb(null, playlist)
     }
 
-    getAllPlaylists(cb){
+    addMusic(id, music, cb) {
+        var musics
+        yamadb.playlists
+            .forEach(element => {
+                if (element.id == id) {
+                    element.musics.push(music)
+                    musics = element.musics
+                }
+            })
+        cb(null, musics)
+    }
 
+    removeMusic(id, music, cb) {
+        var musicList
+        yamadb.playlists
+            .forEach(element => {
+                if (element.id == id) {
+                    console.log(element.musics[0])
+                    console.log(music)
+                    console.log(element.musics[0] == music)
+                    var index = element.musics.indexOf(music);
+                    console.log(index)
+                    if (index > -1) {
+                        element.musics.splice(index, 1);
+                    }
+                    musicList = element.musics
+                }
+            })
+        cb(null, musicList)
     }
 
 
