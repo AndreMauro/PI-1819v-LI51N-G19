@@ -177,24 +177,24 @@ module.exports = (app) => {
         const {pathname, query} = url.parse(req.url, true)
         const method = req.method
 
-        var regex = /^\/yama\/playlists\/+\w+\?name=+\w+\&description=+\w+$/i
+        var regex = /^\/yama\/playlists\/+\w+$/i
 
+        let id = pathname.split('/', 4)[3]
         console.log('URL ' + req.url)
-        const {name, description} = query
         if (method == 'PUT' && regex.exec(req.url)){
-            let id = pathname.split('/', 4)[3]
-            
-            yama.editPlaylist(id, name, description, (err, data) => {
-                if(err){
-                    resp.statusCode = err.code.resp.end()
-                }else{
-                    resp.statusCode = 200
-                    resp.end(JSON.stringify(data))
-                }
-            } )
-            return true
+            bodyRequestFunction(req, body=>{
+                yama.editPlaylist(id, body.name, body.description, (err, data) => {
+                    if(err){
+                        resp.statusCode = err.code.resp.end()
+                    }else{
+                        resp.statusCode = 200
+                        resp.end(JSON.stringify(data))
+                    }
+                })
+            })
+        return true
         }
-        return false
+    return false
     }
 
     //http://localhost:3000/yama/playlists/

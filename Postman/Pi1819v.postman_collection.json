@@ -403,15 +403,45 @@
 		},
 		{
 			"name": "Edit PlayList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b73ab5de-32d6-4783-93d9-ef9d2bd7c789",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Edited playlist name should be newTest \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.name).to.eql(\"newTest\");",
+							"});",
+							"pm.test(\"Edited playlist description should be newPlaylistTest \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.description).to.eql(\"newPlaylistTest\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"name\": \"newTest\",\n    \"description\": \"newPlaylistTest\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?name={{playListName}}&description={{playListdescription}}",
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -421,16 +451,6 @@
 						"yama",
 						"playlists",
 						"{{playListId}}"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "{{playListName}}"
-						},
-						{
-							"key": "description",
-							"value": "{{playListdescription}}"
-						}
 					]
 				}
 			},
