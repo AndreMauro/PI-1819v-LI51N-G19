@@ -6,9 +6,11 @@ ROTAS:
 Pesquisa de artistas 
 -
  -> GET http://localhost:3000/yama/searchArtist?artistName=Pink
+ 
 Obter os álbuns de um artista 
 -
  -> GET http://localhost:3000/yama/artist/{{artistName2}}/Albums
+ 
 Obter os detalhes de um álbum, onde consta, também as músicas que o constituem
 -
  -> GET http://localhost:3000/yama/artist/{{artistName3}}/Album/{{albumName3}}
