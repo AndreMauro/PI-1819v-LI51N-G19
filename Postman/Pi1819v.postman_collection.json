@@ -485,6 +485,119 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "InsertMusic on a PlayList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66c96891-0889-40ba-9ebb-2a775017487f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Iserted track artist name should be cher \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.artist).to.eql(\"cher\");",
+							"});",
+							"pm.test(\"Iserted track name should be believe \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.track).to.eql(\"believe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"playlists",
+						"{{playListId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteMusic from a playListId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "365e110b-0aae-492b-a986-a38b08f39897",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"deleted track artist name should be cher \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.artist).to.eql(\"cher\");",
+							"});",
+							"pm.test(\"deleted track name should be believe \", function () {",
+							"    var jsonData = pm.response.json();",
+							"     pm.expect(jsonData.track).to.eql(\"believe\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}}}  ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"playlists",
+						"{{playListId}}"
+					],
+					"query": [
+						{
+							"key": "artist",
+							"value": "{{artist}}"
+						},
+						{
+							"key": "track",
+							"value": "{{track}}}  "
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-//const Yama = require('./lib/yama-mock')
-const Yama = require('./lib/yama-services')
+const Yama = require('./lib/yama-mock')
+//const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -13,6 +13,8 @@ const es = {
     apiKey: 'b77a32de4783768b503960440aa1740e' 
 }
 
+
+
 const yama = Yama.init(es)
 
 module.exports = (app) => {
@@ -21,9 +23,9 @@ module.exports = (app) => {
     app.use(getAlbumsDetails)
     app.use(createPlaylist) // post
     app.use(getPlaylistById) //singlePlaylist
-   app.use(editPlaylist)   //put
+    app.use(editPlaylist)   //put
     app.use(getPlaylists) //allPlaylists
-    /*  app.use(insertMusic)
+    app.use(insertMusic)
     app.use(deleteMusic)
 
    /* Gerir playlists (listas de músicas favoritas):
@@ -143,11 +145,11 @@ module.exports = (app) => {
         })
         return true
         }
-        return false
+    return false
     }
 
 
-    //http://localhost:9200/yama/playlists/{playlistId}
+    //http://localhost:3000/yama/playlists/{playlistId}
     function getPlaylistById(req, resp) {
         const uri = url.parse(req.url, true)
         const {pathname} = uri
@@ -218,38 +220,40 @@ module.exports = (app) => {
         return false
     }
 
-    //http://localhost:9200/playlists/{playlistName}
+    //http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=b77a32de4783768b503960440aa1740e&artist=cher&track=believe&format=json' 
+    //http://localhost:3000/yama/playlists/{playListId}/   
     function insertMusic(req, resp) {
-        
         const {pathname} = url.parse(req.url, true)
         const method = req.method
-       
-        var regex = /^\/yama\/playlist\/+$/i //TODO DEFINIR ROTA
+        let playListId = pathname.split('/')[3]
+
+        var regex = /^\/yama\/playlists\/+\w+$/i
      
         if (method == 'POST' && regex.exec(req.url)){
-            console.log('inside insertteamingroup');
-            yama.insertMusic(parameters, (err, data) => {
-                if(err){
-                    resp.statusCode = err.code.resp.end()
-                }else{
-                    resp.statusCode = 200
-                    resp.end(JSON.stringify(data))
-                }
+            bodyRequestFunction(req, body => {
+                yama.insertMusic(playListId, body.artist, body.track, (err, data) => {
+                    if(err){
+                        resp.statusCode = err.code.resp.end()
+                    }else{
+                        resp.statusCode = 200
+                        resp.end(JSON.stringify(data))
+                    }
+                })
             })
-            return true
+        return true
         }
-        return false
+    return false
     }
 
-    //http://localhost:9200/playlists/?playlistName={playlistName}&music={mbdi}
+    //http://localhost:3000/yama/playlists/{playListId}/?artist={artist}&track={track}  
     function deleteMusic(req, resp) {
         const uri = url.parse(req.url, true)
         const {pathname, query} = uri
         const method = req.method
-        var regex = /^\/yama\/playlist\/+$/i //TODO DEFINIR ROTA
-    
-        if (method == 'DELETE' && regex.exec(req.url)) {
-            yama.deleteMusic(something, (err,data) => {
+        var regex = /^\/yama\/playlists\/+\w+$/i 
+        let playListId = pathname.split('/')[3]
+        if (method == 'DELETE' && regex.exec(pathname)) {
+            yama.deleteMusic(playListId ,query.artist, query.track, (err,data) => {
                 if(err){
                     resp.statusCode = err.code.resp.end()
                 }else{
@@ -272,6 +276,7 @@ module.exports = (app) => {
              cb(JSON.parse(body))
         });
     }
+
     function resourceNotFond(req, resp) {
         resp.statusCode = 404
         resp.end('Resource Not Found!')

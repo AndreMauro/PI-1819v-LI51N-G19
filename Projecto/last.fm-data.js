@@ -79,8 +79,7 @@ class LastfmData {
 
         const options = {
             'method': 'GET',
-            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&album=${albumName}&api_key=${this.api_key}&format=json`,
-
+            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&album=${albumName}&api_key=${this.api_key}&format=json`
         }
 
         request.get(options , (err, res, body) => {
@@ -109,6 +108,31 @@ class LastfmData {
                 cb(null, albumDetail)
             }
         })
+    }
+
+    //http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=b77a32de4783768b503960440aa1740e&artist=cher&track=believe&format=json' 
+    getMusic( artist, track, cb){
+        let method = 'track.getInfo'
+
+        const options = {
+            'method': 'GET',
+            'uri': `${this.lastfmDataApi}${method}&artist=${artist}&track=${track}&api_key=${this.api_key}&format=json`
+        }
+
+        request.get(options , (err, res, body) => {
+            if(!reportError(200, err, res, body, cb)){
+                body = JSON.parse(body)
+
+                let music = {
+                    "artist" : artist,
+                    "name" : track,
+                    "duration" : body.track.duration,
+                    "playciplaycountynt": body.track.playcount
+                }
+                cb(null, music)
+            }
+        })
+
     }
 }
 

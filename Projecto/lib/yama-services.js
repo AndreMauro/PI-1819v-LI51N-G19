@@ -50,6 +50,17 @@ class Yama {
     getPlaylists(cb){
         this.YamaDb.getPlaylists(cb)
     }
+
+    insertMusic(playListId, artist, track, cb){
+        this.lastfm.getMusic( artist, track, (err, music)=>{
+            this.YamaDb.insertMusic(playListId, music, cb)
+        })
+    }
+
+    deleteMusic(playListId, artist, track, cb){
+        this.YamaDb.deleteMusic(playListId, artist, track, cb)
+    }
+
 }
 
 function reportError(statusOk, err, res, body, cb) {

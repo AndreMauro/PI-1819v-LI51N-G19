@@ -79,8 +79,47 @@ class YamaDB {
                     })
                 })
                 cb(null, obj)
-            } 
+            }
+            cb(err) 
          })
+    }
+
+    insertMusic(playListId, music, cb){
+        this.getPlaylistById(playListId, (err, playlist)=>{
+
+            if(err) cb(err)  //TODO throwing some erros when doesnt found the playlist
+            playlist.musics.push(music)
+           
+            const options = {
+                'uri': `${this.playlist}/${playListId}`,
+                'json': true,
+                'body': playlist
+            }
+
+            request.put(options, (err, res, body) =>{
+                if(!reportError(200, err, res, body, cb))
+                    cb(null, playlist) //should show the playList with the inserted music
+            })
+        })
+    }
+
+    deleteMusic(playlistId, artist, track, cb){
+        this.getPlaylistById(playlistId, (err, playlist)=>{
+
+            if(err) cb(err)  //TODO throwing some erros when doesnt found the playlist
+            playlist.musics =  playlist.musics.filter( m => m.name != track && m.artist != artist)
+            
+            const options = {
+                'uri': `${this.playlist}/${playlistId}`,
+                'json': true,
+                'body': playlist
+            }
+
+            request.put(options, (err, res, body) =>{
+                if(!reportError(200, err, res, body, cb))
+                    cb(null, body) //should show the playList with the inserted music
+            })
+        })
     }
 
 }
@@ -93,7 +132,7 @@ class YamaDB {
         }
         if(res.statusCode != statusOk) {
             cb({
-                code: res.statusCode,
+                statusCode: res.statusCode,
                 message: res.statusMessage,
                 error: body
             })

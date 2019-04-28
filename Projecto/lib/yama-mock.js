@@ -51,25 +51,25 @@ class Yama {
             'musics': []
         }
         yamadb.playlists.push(playlist)
-        cb(null, playlist.id)
+        cb(null, playlist)
     }
 
     getPlaylists(cb) {
         if (!yamadb.playlists) {
-            cb({ code: 404 })
+            cb({ statusCode: 404 })
         } else {
-            cb(null, yamadb.playlists)
+            cb(null, yamadb)
         }
     }
 
-    getPlaylist(id, cb) {
+    getPlaylistById(id, cb) {
         yamadb.playlists
             .forEach(element => {
                 if (element.id == id) {
                     cb(null, element)
                 }
             })
-        cb({ code: 404 })
+        cb({ statusCode: 404 })
     }
 
     editPlaylist(id, name, description, cb) {
@@ -85,30 +85,36 @@ class Yama {
         cb(null, playlist)
     }
 
-    addMusic(id, music, cb) {
-        var musics
+    insertMusic(id, artist, track, cb) {
+        var musics = {
+            "artist": artist,
+            "track": track
+            }
         yamadb.playlists
             .forEach(element => {
                 if (element.id == id) {
                     element.musics.push(music)
-                    element.duration += music.duration
-                    musics = element.musics
+                   // element.duration += music.duration
+                    //musics = element.musics
                 }
             })
         cb(null, musics)
     }
 
-    removeMusic(id, music, cb) {
-        var musicList
+    deleteMusic(id, artist, track, cb) {
+        var musicList =  {
+            "artist": artist,
+            "track": track
+            }
         yamadb.playlists
             .forEach(element => {
                 if (element.id == id) {
                     var index = element.musics.findIndex(x => JSON.stringify(x) === JSON.stringify(music));
                     if (index == -1) {
-                        cb({ code: 404 })
+                        cb({ statusCode: 404 })
                     }
                     element.musics.splice(index, 1);
-                    element.duration -= music.duration
+                  //  element.duration -= music.duration
                     musicList = element.musics
                 }
             })
