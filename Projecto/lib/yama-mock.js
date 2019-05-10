@@ -10,17 +10,22 @@ class Yama {
         return new Yama()
     }
 
-    getArtist(artistName, cb) {
-        var artistrsult = artist.artist.filter(function (item) {
+    getArtist(artistName) {
+        console.log('mock artist ' + artistName)
+        console.log(artist)
+        let artistrsult
+        if( artist){
+             artistrsult = artist.artist.filter(function (item) {
             return (
-                item.name.includes(artistName));
-        });
-        if (artistrsult.length > 0) {
-            cb(null, artistrsult)
+                item.name.includes(artistName))
+                })
         }
-        else {
-            cb({ statusCode: 404 })
-        }
+        return new Promise((resolve, reject) => {
+            return (artistrsult!= null && artistrsult.length> 0) ? resolve(artistrsult) : reject({statusCode: 404})
+            })
+        
+    
+        
     }
 
     getAlbums(artistName, cb) {

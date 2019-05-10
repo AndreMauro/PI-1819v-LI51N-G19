@@ -1,8 +1,8 @@
 'use strict'
 
 const url = require('url')
-const Yama = require('./lib/yama-mock')
-//const Yama = require('./lib/yama-services')
+//const Yama = require('./lib/yama-mock')
+const Yama = require('./lib/yama-services')
 
 
 const es = {
@@ -18,15 +18,15 @@ const es = {
 const yama = Yama.init(es)
 
 module.exports = (app) => {
-    app.use(getArtist)
-    app.use(getAlbums)
+    app.get('/yama/searchArtist/:artistName', getArtist)
+  /*  app.use(getAlbums)
     app.use(getAlbumsDetails)
     app.use(createPlaylist) // post
     app.use(getPlaylistById) //singlePlaylist
     app.use(editPlaylist)   //put
     app.use(getPlaylists) //allPlaylists
     app.use(insertMusic)
-    app.use(deleteMusic)
+    app.use(deleteMusic)*/
 
    /* Gerir playlists (listas de músicas favoritas):
     Criar, atribuindo-lhe um nome e descrição
@@ -40,35 +40,21 @@ module.exports = (app) => {
     app.use(resourceNotFond)
     return app
 
-    // http://localhost:3000/yama/searchArtist?artistName={artistName}
+    // http://localhost:3000/yama/searchArtist/:artistName
     function getArtist(req, resp){
-        const {pathname, query} = url.parse(req.url, true) // true to parse also the query-string
-        const method = req.method
-        console.log(`${Date()}: request to ${pathname}`)
-
-        
-        var regex = /^\/yama\/searchArtist\?artistName=+\w+$/i
-        if(method == 'GET' && regex.exec(req.url)){ //as rotas estão no readme do git
-           
-           
-            let artistName = query.artistName
-           
-            if(artistName == null) return false
-            
-            yama.getArtist(artistName, (err, data) => { 
-                if(err) {
-                    resp.statusCode = err.statusCode
-                    resp.end()
-                } else {
-                    console.log(JSON.stringify(data))
-                    resp.statusCode = 200
-                    resp.end(JSON.stringify(data))
-                }
+      console.log('yap geting an artist for you')
+      const artistName = req.params.artistName
+      
+      yama.getArtist(artistName)
+            .then((body)=> {
+                resp.statusCode = 200
+                resp.end(JSON.stringify(body))
             })
-            return true
-        }
-        return false
-
+            .catch((err => {
+                console.log(err)
+                resp.statusCode = err.statusCode
+                resp.end()
+            }))
     }
 
 

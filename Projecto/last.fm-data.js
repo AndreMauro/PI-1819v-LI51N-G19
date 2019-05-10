@@ -1,5 +1,5 @@
 'use strict'
-const request = require('request')
+const rp = require('request-promise')
 
 
 class LastfmData {
@@ -13,18 +13,17 @@ class LastfmData {
 
 
 //http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=cher&api_key=b77a32de4783768b503960440aa1740e&format=json
-    getArtist(artistName, cb){
+    getArtist(artistName){
         let method = 'artist.search'
 
         const options= {
             'method': 'GET',
-            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&api_key=${this.api_key}&format=json`,
-
+            'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&api_key=${this.api_key}`,
+            'json' : true
         }
-        request.get(options, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb)){
 
-                body = JSON.parse(body) 
+        return rp.get(options)
+            .then( body => {
                 var artists=body.results.artistmatches.artist
                 var retArtists= []
                 artists.forEach(element => {
@@ -32,15 +31,12 @@ class LastfmData {
                     artist.name = element.name
                     artist.listeners = element.listeners
                     artist.mbid = element.mbid
-
-        
-                retArtists.push(artist)
-            });
-            cb(null,retArtists)
-        }
-    })
-}
-
+                    retArtists.push(artist)
+                    })
+                return retArtists
+            })
+    }
+         
    
 
 //http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=Eminem&api_key=b77a32de4783768b503960440aa1740e&format=json
@@ -133,22 +129,6 @@ class LastfmData {
             }
         })
 
-    }
-}
-
-
-function reportError(statusOk, err, res, body, cb) {
-    if(err) {
-        cb(err)
-        return true
-    }
-    if(res.statusCode != statusOk) {
-        cb({
-            code: res.statusCode,
-            message: res.statusMessage,
-            error: body
-        })
-        return true
     }
 }
 
