@@ -1,6 +1,6 @@
 'use strict'
 
-const request = require('request')
+const request = require('request-promise')
 const LastfmData = require('../last.fm-data')
 const YamaDb = require('../yama-db')
 
@@ -23,8 +23,11 @@ class Yama {
         return new Yama(es)
     }
 
-    getArtist(artistName, cb) { 
-        this.lastfm.getArtist(artistName, cb)
+    getArtist(artistName) { 
+       return this.lastfm.getArtist(artistName)
+       .catch(err => 
+         Promise.reject({statusCode: 404}
+        ))
     }
 
     getAlbums(artistNanem, cb) {
