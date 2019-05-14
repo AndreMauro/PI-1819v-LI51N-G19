@@ -4,7 +4,7 @@ const http = require('http')
 const express = require('express')
 const morgan = require('morgan')
 const yamaWebApi= require("./yama-web-api")
-const port = 4000
+const port = 3000
 
 
 const webServer = express()

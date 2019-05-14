@@ -21,7 +21,7 @@ class Yama {
                 })
         }
         return new Promise((resolve, reject) => {
-            return (artistrsult!= null && artistrsult.length> 0) ? resolve(artistrsult) : reject({statusCode: 404})
+            return (artistrsult != null && artistrsult.length> 0) ? resolve(artistrsult) : reject({statusCode: 404})
             })
         
     
