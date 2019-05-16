@@ -1,4 +1,5 @@
 const request = require('request')
+const rp = require('request-promise')
 
 class YamaDB {
 
@@ -12,8 +13,9 @@ class YamaDB {
     }
      
     //
-    createPlaylist(name, description, cb){
+    createPlaylist(name, description){
         const options = {
+            'method': 'POST',
             'uri': `${this.playlist}`,
             'json': true,
             'body': {'name': name,
@@ -21,55 +23,69 @@ class YamaDB {
                     'musics': [] 
                 }
         }
-        request.post(options, (err, res, body) =>{
-            if(!reportError(201, err, res, body, cb)){
-                cb(null,{"id":body._id}) 
-            }
-         })
+        return rp(options)
+            .then(
+                body => {
+                    return { "id":body._id}
+                }
+            )
     }
     
-    getPlaylistById(id,cb){
+    getPlaylistById(id){
         const uri = `${this.playlist}/${id}`
-        request.get(uri, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb)){
-                body = JSON.parse(body)   
+
+        return rp({
+            'method': 'GET',
+            'url' : uri,
+            'json' : true
+        })
+       .then(body =>{
+               // body = JSON.parse(body)   
                 let playlist = {}         
                 playlist.id = body._id
                 playlist.name = body._source.name
                 playlist.description = body._source.description
                 playlist.musics = body._source.musics
                  
-                cb(null, playlist)
-            }
-        })
+                return playlist
+            })
     }
 
-    editPlaylist(id,name, description, cb){
-       this.getPlaylistById(id,(err, playlist) => {  
+    editPlaylist(id,name, description){
+       return this.getPlaylistById(id)
+       .then (body => {  
 			
-        playlist.name=name
-        playlist.description=description
+        body.name=name
+        body.description=description
 
         const options = {
             'uri': `${this.playlist}/${id}`,
             'json': true,
-            'body': playlist
+            'body': body
         }
-        
-        request.put(options, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb))
-                cb(null, body)
-            })
-        })  
+        return options
+        })
+        .then(options => {
+            return rp(options)
+            .then(
+                body => {
+                    return  { "id" : body._id}
+                  }
+
+            )
+         })
     }
 
-    getPlaylists(cb){       
+    getPlaylists(){       
         const uri = `${this.playlist}/_search`
-        request.get(uri, (err, res, body) =>{
-            if(!reportError(200, err, res, body, cb)){
-                body = JSON.parse(body)
-                body = body.hits.hits
-                let obj = {'playlists':[]}  // passing groups array to be consistent
+
+        return rp({
+            'method': 'GET',
+            'url' : uri,
+            'json' : true  
+        })
+        .then( body => {body = body.hits.hits 
+        let obj = {'playlists':[]}  // passing groups array to be consistent
                 body.forEach(p => {
                     obj.playlists.push({
                         'id':p._id,
@@ -78,66 +94,62 @@ class YamaDB {
                         'musics': p._source.musics
                     })
                 })
-                cb(null, obj)
-            }
-            cb(err) 
-         })
+               return obj
+        })
     }
 
-    insertMusic(playListId, music, cb){
-        this.getPlaylistById(playListId, (err, playlist)=>{
-
-            if(err) cb(err)  //TODO throwing some erros when doesnt found the playlist
-            playlist.musics.push(music)
-           
+    insertMusic(playListId, music){
+        return this.getPlaylistById(playListId)
+        .then(body => {
+            body.musics.push(music)
+            
             const options = {
+                'method': 'PUT',
                 'uri': `${this.playlist}/${playListId}`,
                 'json': true,
                 'body': playlist
             }
+            return options
 
-            request.put(options, (err, res, body) =>{
-                if(!reportError(200, err, res, body, cb))
-                    cb(null, playlist) //should show the playList with the inserted music
-            })
+        })
+        .then(options=> {
+            return rp(options)
+            .then(
+                body => {
+                  return  { "id" : body._id}
+                }
+            )
         })
     }
 
-    deleteMusic(playlistId, artist, track, cb){
-        this.getPlaylistById(playlistId, (err, playlist)=>{
-
-            if(err) cb(err)  //TODO throwing some erros when doesnt found the playlist
-            playlist.musics =  playlist.musics.filter( m => m.name != track && m.artist != artist)
-            
+    deleteMusic(playlistId, artist, track){
+       return this.getPlaylistById(playlistId)
+        .then(body =>{
+            body.musics =  playlist.musics.filter( m => m.name != track && m.artist != artist)
+    
+           
             const options = {
+                'method':'PUT',
                 'uri': `${this.playlist}/${playlistId}`,
                 'json': true,
-                'body': playlist
+                'body': body
             }
+            return options
+        })
 
-            request.put(options, (err, res, body) =>{
-                if(!reportError(200, err, res, body, cb))
-                    cb(null, body) //should show the playList with the inserted music
-            })
+        .then(options => {
+            return rp(options)
+            .then(
+                body => {
+                  return  { "id" : body._id}
+                }
+            )
         })
     }
-
 }
 
 
- function reportError(statusOk, err, res, body, cb) {
-        if(err) {
-            cb(err)
-            return true
-        }
-        if(res.statusCode != statusOk) {
-            cb({
-                statusCode: res.statusCode,
-                message: res.statusMessage,
-                error: body
-            })
-            return true
-        }
-    }
+
+
 
     module.exports = YamaDB

@@ -12,5 +12,5 @@ webServer.use(morgan('dev'))
 yamaWebApi(webServer)
 http
     .createServer(webServer)
-    .listen(port, () => console.log('Server running on port ' + port))
+    .listen(3000, () => console.log('Server running on port ' + port))
 

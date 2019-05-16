@@ -28,26 +28,27 @@ class Yama {
         
     }
 
-    getAlbums(artistName, cb) {
+    getAlbums(artistName) {
         const returnedAlbums = albums[artistName]
-        if (!returnedAlbums) {
-            cb({ statusCode: 404 })
-        } else {
-            cb(null, returnedAlbums)
-        }
+       
+        return new Promise((resolve,reject) => {
+            return (returnedAlbums)? resolve(returnedAlbums) : reject({statusCode: 404})
+        })
+        
+    
     }
 
-    getAlbumsDetails(artistName, albumName, cb) {
-        if (albumDetails != null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName) {
-            cb(null, albumDetails.album)
-        }
-        else {
-            cb({ statusCode: 404 })
-        }
+    getAlbumsDetails(artistName, albumName) {
+        const albumD= albumDetails.album
+        return new Promise((resolve,reject) => {
+             return (albumDetails != null && albumDetails.album.name == albumName && albumDetails.album.artist == artistName) ?
+                resolve(albumD) : reject({statusCode: 404})
+            
+        })
     }
 
 
-    createPlaylist(name, description, cb) {
+    createPlaylist(name, description) {
         const playlist = {
             'id': yamadb.playlists.length + 1,  //um id qualquer
             'name': name,
@@ -56,28 +57,26 @@ class Yama {
             'musics': []
         }
         yamadb.playlists.push(playlist)
-        cb(null, playlist)
+        return Promise(playlist) 
     }
 
-    getPlaylists(cb) {
-        if (!yamadb.playlists) {
-            cb({ statusCode: 404 })
-        } else {
-            cb(null, yamadb)
-        }
+    getPlaylists() {
+        return new Promise((resolve, reject) => {
+            return (yamadb.playlists) ? resolve(yamadb) : reject({statusCode: 404})
+            })
     }
 
-    getPlaylistById(id, cb) {
+    getPlaylistById(id) {
         yamadb.playlists
             .forEach(element => {
                 if (element.id == id) {
-                    cb(null, element)
+                   return Promise(element) 
                 }
             })
-        cb({ statusCode: 404 })
+            Promise.reject({code:404})
     }
 
-    editPlaylist(id, name, description, cb) {
+    editPlaylist(id, name, description) {
         var playlist
         yamadb.playlists
             .forEach(element => {
@@ -87,10 +86,10 @@ class Yama {
                     playlist = element
                 }
             })
-        cb(null, playlist)
+        return Promise(playlist)
     }
 
-    insertMusic(id, artist, track, cb) {
+    insertMusic(id, artist, track) {
         var musics = {
             "artist": artist,
             "track": track
@@ -103,10 +102,10 @@ class Yama {
                     //musics = element.musics
                 }
             })
-        cb(null, musics)
+        return Promise(musics)
     }
 
-    deleteMusic(id, artist, track, cb) {
+    deleteMusic(id, artist, track) {
         var musicList =  {
             "artist": artist,
             "track": track
@@ -116,14 +115,14 @@ class Yama {
                 if (element.id == id) {
                     var index = element.musics.findIndex(x => JSON.stringify(x) === JSON.stringify(music));
                     if (index == -1) {
-                        cb({ statusCode: 404 })
+                        Promise.reject({code:404})
                     }
                     element.musics.splice(index, 1);
                   //  element.duration -= music.duration
                     musicList = element.musics
                 }
             })
-        cb(null, musicList)
+        return Promise( musicList)
     }
 
 

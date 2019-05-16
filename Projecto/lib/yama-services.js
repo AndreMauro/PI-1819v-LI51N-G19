@@ -30,55 +30,67 @@ class Yama {
         ))
     }
 
-    getAlbums(artistNanem, cb) {
-        this.lastfm.getAlbums(artistNanem, cb)
+    getAlbums(artistNanem) {
+        return this.lastfm.getAlbums(artistNanem)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
-    getAlbumsDetails(artistName, albumName, cb) {
-        this.lastfm.getAlbumDetail(artistName, albumName, cb)
+    getAlbumsDetails(artistName, albumName) {
+        return this.lastfm.getAlbumDetail(artistName, albumName)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
-    createPlaylist(name, description, cb) {
-        this.YamaDb.createPlaylist(name, description, cb)
+    createPlaylist(name, description) {
+       return this.YamaDb.createPlaylist(name, description)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
 
     }
 
-    getPlaylistById(id, cb){
-        this.YamaDb.getPlaylistById(id,cb)
+    getPlaylistById(id){
+        return this.YamaDb.getPlaylistById(id)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
-    editPlaylist(id, name, description, cb){
-        this.YamaDb.editPlaylist(id,name, description, cb)
+    editPlaylist(id, name, description){
+        return this.YamaDb.editPlaylist(id,name, description)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
-    getPlaylists(cb){
-        this.YamaDb.getPlaylists(cb)
+    getPlaylists(){
+        return this.YamaDb.getPlaylists()
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
-    insertMusic(playListId, artist, track, cb){
-        this.lastfm.getMusic( artist, track, (err, music)=>{
-            this.YamaDb.insertMusic(playListId, music, cb)
+    insertMusic(playListId, artist, track){
+        return this.lastfm.getMusic( artist, track, (err, music)=>{
+            this.YamaDb.insertMusic(playListId, music)
         })
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
-    deleteMusic(playListId, artist, track, cb){
-        this.YamaDb.deleteMusic(playListId, artist, track, cb)
+    deleteMusic(playListId, artist, track){
+        return this.YamaDb.deleteMusic(playListId, artist, track)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
     }
 
 }
 
-function reportError(statusOk, err, res, body, cb) {
-    if(err) {
-        cb(err)
-        return true
-    }
-    if(res.statusCode != statusOk) {
-        cb({
-            code: res.statusCode,
-            message: res.statusMessage,
-            error: body
-        })
-        return true
-    }
-}
+
+
 
 module.exports = Yama
