@@ -169,7 +169,7 @@ module.exports = (app) => {
                 body.push(chunk)
             }).on('end', () => {
                 body = Buffer.concat(body).toString()
-                resolve(JSON.parse(body))
+                resolve(body)
             })
         })
     }
