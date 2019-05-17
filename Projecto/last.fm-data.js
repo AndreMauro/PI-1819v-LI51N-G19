@@ -53,7 +53,7 @@ class LastfmData {
         return rp.get(options) 
             .then( body => {
 
-                body = JSON.parse(body)
+                //body = JSON.parse(body)
                 var albums = (body["topalbums"])["album"]
                 var retAlbums = []
                 albums.forEach(element => {
@@ -67,7 +67,7 @@ class LastfmData {
                     })
                     retAlbums.push(album)
                 });
-                
+                return retAlbums
             })
         
     }
