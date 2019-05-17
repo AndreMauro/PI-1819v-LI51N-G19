@@ -21,7 +21,7 @@ module.exports = (app) => {
     app.get('/yama/searchArtist/:artistName', getArtist)
     app.get('/yama/artist/:artistName/Albums',getAlbums)
     app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
-    app.post(createPlaylist) // post
+    app.post('/playlists', createPlaylist) // post
     app.get('/yama/playlists/:playlistId', getPlaylistById) //singlePlaylist
     app.put(editPlaylist)   //put
     app.get('/yama/playlists', getPlaylists) //allPlaylists
