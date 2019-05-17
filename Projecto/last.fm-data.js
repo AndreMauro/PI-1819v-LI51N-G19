@@ -85,7 +85,7 @@ class LastfmData {
         return rp.get(options) 
             .then( body => {
         
-                body = JSON.parse(body)
+                //body = JSON.parse(body)
                 const albumDetail = {"name": body.album.name,
                                      "artist": body.album.name}
                 
@@ -105,7 +105,7 @@ class LastfmData {
                     
                     albumDetail.tracks.push(musicDetails)
                 })
-                
+                return albumDetail
                
             })
         }
@@ -124,7 +124,7 @@ class LastfmData {
         return rp.get(options)
         .then(body => {
             {
-                body = JSON.parse(body)
+                //body = JSON.parse(body)
 
                 let music = {
                     "artist" : artist,

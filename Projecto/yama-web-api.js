@@ -66,7 +66,7 @@ module.exports = (app) => {
         yama.getAlbums(artistName)
             .then((body)=> {
                 resp.statusCode = 200
-                resp.send(JSON.stringify(body))
+                resp.end(JSON.stringify(body))
             })
             .catch((err => {
                 console.log(err)
