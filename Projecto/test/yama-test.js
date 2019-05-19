@@ -25,39 +25,39 @@ describe('test yama', () => {
   it('Should get artist Pink', done => {
     const yamaInit = yama.init(es)
     yamaInit.getArtist('Pink')
-            .then(data => {
+      .then(data => {
 
-      should.exist(data)
-      expect(data[1])
-        .to
-        .be
-        .an('object')
-        .and.have.a.property('name', 'Pink')
-      done()
+        should.exist(data)
+        expect(data[1])
+          .to
+          .be
+          .an('object')
+          .and.have.a.property('name', 'Pink')
+        done()
 
-            })
-            .catch(err =>{
-              should.not.exist(err)
-              done()
-            })
+      })
+      .catch(err => {
+        should.not.exist(err)
+        done()
+      })
   })
 
   it('Fourth artistName should be Pink Floyd', done => {
     const yamaInit = yama.init(es)
     yamaInit.getArtist('Pink Floyd')
-    .then(data => {
-      should.exist(data)
-      expect(data[0])
-        .to
-        .be
-        .an('object')
-        .and.have.a.property('name', 'Pink Floyd')
-      done()
-    })
-    .catch(err =>{
-      should.not.exist(err)
-      done()
-    })
+      .then(data => {
+        should.exist(data)
+        expect(data[0])
+          .to
+          .be
+          .an('object')
+          .and.have.a.property('name', 'Pink Floyd')
+        done()
+      })
+      .catch(err => {
+        should.not.exist(err)
+        done()
+      })
   })
 
 
@@ -68,35 +68,37 @@ describe('test yama', () => {
   it('Should get a detail info of an album called Feedback from Djodje ', done => {
     const yamaInit = yama.init(es)
     yamaInit.getAlbumsDetails('Djodje', 'Feedback')
-    .then( album => {
-      should.exist(album)
-      expect(album)
-        .to
-        .be
-        .an('object')
-        .and.have.a.property('name', 'Feedback')
-      done()
-    })
+      .then(album => {
+        should.exist(album)
+        expect(album)
+          .to
+          .be
+          .an('object')
+          .and.have.a.property('name', 'Feedback')
+        done()
+      })
   })
-  
-  /*it('Last music of Feedback album from Djodje should be Um Segundo (feat. Ferro Gaita)  ', done => {
+
+  it('Last music of Feedback album from Djodje should be Um Segundo (feat. Ferro Gaita)  ', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbumsDetails('Djodje', 'Feedback', (err, album) => {
-      should.exist(album)
-      expect(album.tracks[10])
-        .to
-        .be
-        .an('object')
-        .and.have.a.property('name', 'Um Segundo (feat. Ferro Gaita)')
-      done()
-    })
+    yamaInit.getAlbumsDetails('Djodje', 'Feedback')
+      .then(album => {
+        should.exist(album)
+        expect(album.tracks[10])
+          .to
+          .be
+          .an('object')
+          .and.have.a.property('name', 'Um Segundo (feat. Ferro Gaita)')
+        done()
+      })
   })
   //#endregion getAlbumsDetails
 
   //#region  getAlbums
   it('Should get the 3 top albums for Eminem', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('Eminem', (err, album) => {
+    yamaInit.getAlbums('Eminem')
+    .then(album => {
       should.exist(album)
       expect(album)
         .to
@@ -108,7 +110,8 @@ describe('test yama', () => {
 
   it('The first returned album for Eminem should be Recovery', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('Eminem', (err, album) => {
+    yamaInit.getAlbums('Eminem')
+    .then(album => {
       should.exist(album)
       expect(album[0])
         .to
@@ -121,7 +124,8 @@ describe('test yama', () => {
 
   it('The second returned album for Eminem should be The Eminem Show', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('Eminem', (err, album) => {
+    yamaInit.getAlbums('Eminem')
+    .then(album => {
       should.exist(album)
       expect(album[1])
         .to
@@ -134,7 +138,8 @@ describe('test yama', () => {
 
   it('Should get the 3 top albums for U2', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('U2', (err, album) => {
+    yamaInit.getAlbums('U2')
+    .then(album => {
       should.exist(album)
       expect(album)
         .to
@@ -146,7 +151,8 @@ describe('test yama', () => {
 
   it('The first returned album for U2 should be All That You Can\'t Leave Behind', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('U2', (err, album) => {
+    yamaInit.getAlbums('U2')
+    .then(album => {
       should.exist(album)
       expect(album[0])
         .to
@@ -159,7 +165,8 @@ describe('test yama', () => {
 
   it('The second returned album for U2 should be Achtung Baby', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getAlbums('U2', (err, album) => {
+    yamaInit.getAlbums('U2')
+    .then(album => {
       should.exist(album)
       expect(album[1])
         .to
@@ -174,7 +181,8 @@ describe('test yama', () => {
   //#region createPlaylist
   it('Should create one playlist with name The best of Eminem', done => {
     const yamaInit = yama.init(es)
-    yamaInit.createPlaylist('The best of Eminem', 'The greatest musics', (err, playlistId) => {
+    yamaInit.createPlaylist('The best of Eminem', 'The greatest musics')
+    .then(playlistId => {
       should.exist(playlistId)
       expect(playlistId)
         .to
@@ -187,7 +195,8 @@ describe('test yama', () => {
 
   it('Should create one playlist with name Top Portugal', done => {
     const yamaInit = yama.init(es)
-    yamaInit.createPlaylist('Top Portugal', 'The top musics of Portugal', (err, playlistId) => {
+    yamaInit.createPlaylist('Top Portugal', 'The top musics of Portugal')
+    .then(playlistId => {
       should.exist(playlistId)
       expect(playlistId)
         .to
@@ -202,7 +211,8 @@ describe('test yama', () => {
   //#region editPlaylist
   it('Should edit the description of The best of Eminem playlist', done => {
     const yamaInit = yama.init(es)
-    yamaInit.editPlaylist(1, 'The best of Eminem', 'The greatest musics of all time', (err, playlist) => {
+    yamaInit.editPlaylist(1, 'The best of Eminem', 'The greatest musics of all time')
+    .then(playlist => {
       should.exist(playlist)
       expect(playlist)
         .to
@@ -215,7 +225,8 @@ describe('test yama', () => {
 
   it('Should rename the Top Portugal playlist', done => {
     const yamaInit = yama.init(es)
-    yamaInit.editPlaylist(2, 'Top Portugal 2019', 'The top musics of Portugal', (err, playlist) => {
+    yamaInit.editPlaylist(2, 'Top Portugal 2019', 'The top musics of Portugal')
+    .then(playlist => {
       should.exist(playlist)
       expect(playlist)
         .to
@@ -230,7 +241,8 @@ describe('test yama', () => {
   //#region getPlaylists
   it('Should edit the description of The best of Eminem playlist', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getPlaylists((err, playlists) => {
+    yamaInit.getPlaylists()
+    .then(playlists => {
       should.exist(playlists)
       expect(playlists)
         .to
@@ -250,7 +262,8 @@ describe('test yama', () => {
       'artist': 'some artist',
       'duration': 267
     }
-    yamaInit.addMusic(1, music, (err, musics) => {
+    yamaInit.addMusic(1, music)
+    .then(musics => {
       should.exist(musics)
       expect(musics)
         .to
@@ -265,14 +278,15 @@ describe('test yama', () => {
   //#region getPlaylist
   it('Should get the playlist with id 1', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getPlaylist(1, (err, playlist) => {
+    yamaInit.getPlaylist(1)
+    .then(playlist => {
       should.exist(playlist)
       expect(playlist)
         .to
         .be
         .a('object')
         .have.a.property('duration', 267)
-        expect(playlist.musics)
+      expect(playlist.musics)
         .to
         .be
         .a('array')
@@ -290,7 +304,8 @@ describe('test yama', () => {
       'artist': 'some artist',
       'duration': 267
     }
-    yamaInit.removeMusic(1, music, (err, musics) => {
+    yamaInit.removeMusic(1, music)
+    .then(musics => {
       should.exist(musics)
       expect(musics)
         .to
@@ -305,14 +320,15 @@ describe('test yama', () => {
   //#region getPlaylist
   it('Should get the playlist with id 1', done => {
     const yamaInit = yama.init(es)
-    yamaInit.getPlaylist(1, (err, playlist) => {
+    yamaInit.getPlaylist(1)
+    .then(playlist => {
       should.exist(playlist)
       expect(playlist)
         .to
         .be
         .a('object')
         .have.a.property('duration', 0)
-        expect(playlist.musics)
+      expect(playlist.musics)
         .to
         .be
         .a('array')
@@ -321,6 +337,5 @@ describe('test yama', () => {
     })
   })
   //#endregion
-  */
-  
+
 })
