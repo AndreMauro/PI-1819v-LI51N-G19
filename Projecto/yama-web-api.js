@@ -21,10 +21,10 @@ module.exports = (app) => {
     app.get('/yama/searchArtist/:artistName', getArtist)
     app.get('/yama/artist/:artistName/Albums',getAlbums)
     app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
-    app.post('/playlists', createPlaylist) // post
+    app.post('/yama/playlists', createPlaylist) // post
     app.get('/yama/playlists/:playlistId', getPlaylistById) //singlePlaylist
-    app.put(editPlaylist)   //put
-    app.get('/yama/playlists', getPlaylists) //allPlaylists
+    app.put('/yama/playlists/:playlistId', editPlaylist)   //put
+    app.get('/yama/playlists/', getPlaylists) //allPlaylists
     app.post('/yama/playlists/:playListId', insertMusic)
     app.delete('/yama/playlists/:playListId/?artist=:artist&track=:track', deleteMusic)
 
@@ -98,9 +98,8 @@ module.exports = (app) => {
     
     //http://localhost:9200/playlists
     function createPlaylist(req, resp, next) {
-        bodyRequestFunction(req)
-        .then(body => yama.createPlaylist(body.name, body.description))
-        .then(data => res.status(201).end(data))
+        yama.createPlaylist(req.body.name, req.body.description)
+        .then(data => resp.status(201).end(JSON.stringify(data)))
         .catch(err => next(err))     
         
     }
@@ -108,36 +107,33 @@ module.exports = (app) => {
 
     //http://localhost:3000/yama/playlists/{playlistId}
     function getPlaylistById(req, resp, next) {
-        
-          yama.getPlaylistById(id, (err, data) => {
-                if (err) {
-                    resp.statusCode = err.code
-                    resp.end()
-                } else {
+        let id = req.params.playlistId
+          yama.getPlaylistById(id)
+          .then( data => {
                     resp.statusCode = 200
                     resp.end(JSON.stringify(data))
-                }
             })
-            return true
+            .catch(err => {
+                resp.statusCode = err.code
+                resp.end()
+            })
         }
-        return false
     }
 
     function editPlaylist(req, resp, next) {
-        let id = req.params.id
-        bodyRequestFunction(req)
-        .then(body => yama.createPlaylist(id, body.name, body.description))
-        .then(data => res.status(201).end(data))
+        let id = req.params.playlistId
+        yama.createPlaylist(id, req.body.name, req.body.description)
+        .then(data => resp.status(201).end(JSON.stringify(data)))
         .catch(err => next(err))     
     }
 
     //http://localhost:3000/yama/playlists/
     function getPlaylists(req, resp, next) {
-        bodyRequestFunction(req)
-        .then(body => yama.getPlaylists())
-        .then(data => res.status(201).end(data))
-        .catch(err => next(err))     
-            
+        yama.getPlaylists()
+        .then(body =>{
+            resp.statusCode = 200
+            resp.end(JSON.stringify(body))})
+        .catch(err => next(err))
     }
 
     //http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=b77a32de4783768b503960440aa1740e&artist=cher&track=believe&format=json' 
