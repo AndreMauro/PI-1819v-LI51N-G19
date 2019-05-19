@@ -11,8 +11,6 @@ class Yama {
     }
 
     getArtist(artistName) {
-        console.log('mock artist ' + artistName)
-        console.log(artist)
         let artistrsult
         if( artist){
              artistrsult = artist.artist.filter(function (item) {
