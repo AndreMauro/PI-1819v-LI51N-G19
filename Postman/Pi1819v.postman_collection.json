@@ -33,10 +33,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "http://localhost:9200/yama/",
 							"protocol": "http",
@@ -148,10 +144,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:3000/yama/searchArtist/{{artist}}",
 					"protocol": "http",
@@ -208,10 +200,6 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:3000/yama/artist/{{artistName2}}/Albums",
 					"protocol": "http",
@@ -269,10 +257,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:3000/yama/artist/{{artistName3}}/Album/{{albumName3}}",
 					"protocol": "http",
@@ -376,10 +360,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
 					"protocol": "http",
@@ -391,6 +371,52 @@
 						"yama",
 						"playlists",
 						"{{playListId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPlaylists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d6534a6-b374-4839-8724-4466a1f4e177",
+						"exec": [
+							"pm.test(\"Test obtaining the playlists array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.property(\"playlists\");\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test playlists if it is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"     pm.expect(jsonData.playlists).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/yama/playlists/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"yama",
+						"playlists",
+						""
 					]
 				}
 			},
@@ -452,56 +478,6 @@
 			"response": []
 		},
 		{
-			"name": "GetAllPlaylists",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "8d6534a6-b374-4839-8724-4466a1f4e177",
-						"exec": [
-							"pm.test(\"Test obtaining the playlists array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).to.have.a.property(\"playlists\");\r",
-							"    \r",
-							"});\r",
-							"\r",
-							"pm.test(\"Test playlists if it is an array\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"     pm.expect(jsonData.playlists).to.be.an('array');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:3000/yama/playlists/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"yama",
-						"playlists",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "InsertMusic on a PlayList",
 			"event": [
 				{
@@ -538,7 +514,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"artist\" : \"cher\",\n\t\"track\" : \"believe\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
@@ -584,10 +560,6 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}}}  ",
 					"protocol": "http",

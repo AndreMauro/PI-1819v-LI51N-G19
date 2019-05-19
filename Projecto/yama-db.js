@@ -53,8 +53,8 @@ class YamaDB {
 
     editPlaylist(id,name, description){
        return this.getPlaylistById(id)
-       .then (body => {  
-			
+       .then ( body => {  
+        
         body.name=name
         body.description=description
 
@@ -110,7 +110,6 @@ class YamaDB {
                 'body': playlist
             }
             return options
-
         })
         .then(options=> {
             return rp(options)

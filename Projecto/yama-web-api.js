@@ -18,15 +18,6 @@ const es = {
 const yama = Yama.init(es)
 
 module.exports = (app) => {
-    app.get('/yama/searchArtist/:artistName', getArtist)
-    app.get('/yama/artist/:artistName/Albums',getAlbums)
-    app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
-    app.post('/yama/playlists', createPlaylist) // post
-    app.get('/yama/playlists/:playlistId', getPlaylistById) //singlePlaylist
-    app.put('/yama/playlists/:playlistId', editPlaylist)   //put
-    app.get('/yama/playlists/', getPlaylists) //allPlaylists
-    app.post('/yama/playlists/:playListId', insertMusic)
-    app.delete('/yama/playlists/:playListId/?artist=:artist&track=:track', deleteMusic)
 
    /* Gerir playlists (listas de músicas favoritas):
     Criar, atribuindo-lhe um nome e descrição
@@ -36,6 +27,15 @@ module.exports = (app) => {
     Adicionar uma música
     Remover uma música*/
 
+    app.get('/yama/searchArtist/:artistName', getArtist)
+    app.get('/yama/artist/:artistName/Albums',getAlbums)
+    app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
+    app.post('/yama/playlists', createPlaylist) // post
+    app.get('/yama/playlists/:playlistId', getPlaylistById) //singlePlaylist
+    app.put('/yama/playlists/:playlistId', editPlaylist)   //put
+    app.get('/yama/playlists/', getPlaylists) //allPlaylists
+    app.post('/yama/playlists/:playListId', insertMusic)
+    app.delete('/yama/playlists/:playListId/?artist=:artist&track=:track', deleteMusic)
 
     app.use(resourceNotFond)
     return app
@@ -122,8 +122,8 @@ module.exports = (app) => {
 
     function editPlaylist(req, resp, next) {
         let id = req.params.playlistId
-        yama.createPlaylist(id, req.body.name, req.body.description)
-        .then(data => resp.status(201).end(JSON.stringify(data)))
+        yama.editPlaylist(id, req.body.name, req.body.description)
+        .then(data => resp.status(200).end(JSON.stringify(data)))
         .catch(err => next(err))     
     }
 
@@ -140,9 +140,8 @@ module.exports = (app) => {
     //http://localhost:3000/yama/playlists/{playListId}/   
     function insertMusic(req, resp, next) {
         let playListId = req.params.playListId
-        bodyRequestFunction(req)
-            .then(body => yama.insertMusic(playListId, body.artist, body.track))
-            .then(data => res.status(201).end(data))
+            yama.insertMusic(playListId, req.body.artist, req.body.track)
+            .then(data => resp.status(200).end(JSON.stringify(data)))
             .catch(err => next(err))     
             
         
@@ -150,26 +149,12 @@ module.exports = (app) => {
 
     //http://localhost:3000/yama/playlists/{playListId}/?artist={artist}&track={track}  
     function deleteMusic(req, resp, next) {
+        let {query} = req.query
         let playListId = req.params.playListId
-        bodyRequestFunction(req)
-        .then(body => yama.deleteMusic(playListId ,query.artist, query.track))
-        .then(data => res.status(201).end(data))
+        yama.deleteMusic(playListId ,query.artist, query.track)
+        .then(data => res.status(200).end(JSON.stringify(data)))
         .catch(err => next(err))  
     }
-
-    //bodyRequestFunction
-    function bodyRequestFunction(req, cb){
-        return new Promise((resolve, reject) => {
-            let body = []
-            req.on('data', (chunk) => {
-                body.push(chunk)
-            }).on('end', () => {
-                body = Buffer.concat(body).toString()
-                resolve(body)
-            })
-        })
-    }
-    
 
     function resourceNotFond(req, resp, next) {
         next({
