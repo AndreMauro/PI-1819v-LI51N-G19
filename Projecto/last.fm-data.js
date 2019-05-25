@@ -130,7 +130,7 @@ class LastfmData {
                     "artist" : artist,
                     "name" : track,
                     "duration" : body.track.duration,
-                    "playciplaycountynt": body.track.playcount
+                    "playcount": body.track.playcount
                 }
                return music
             }

@@ -141,7 +141,9 @@ module.exports = (app) => {
     function insertMusic(req, resp, next) {
         let playListId = req.params.playListId
             yama.insertMusic(playListId, req.body.artist, req.body.track)
-            .then(data => resp.status(200).end(JSON.stringify(data)))
+            .then(body =>{
+                resp.statusCode = 200
+                resp.end(JSON.stringify(body))})
             .catch(err => next(err))     
             
         

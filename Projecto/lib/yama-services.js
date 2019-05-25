@@ -74,8 +74,9 @@ class Yama {
     }
 
     insertMusic(playListId, artist, track){
-        return this.lastfm.getMusic( artist, track, (err, music)=>{
-            this.YamaDb.insertMusic(playListId, music)
+        return this.lastfm.getMusic( artist, track)
+        .then( music =>{
+           return this.YamaDb.insertMusic(playListId, music)
         })
         .catch(err => 
             Promise.reject({statusCode: 404}

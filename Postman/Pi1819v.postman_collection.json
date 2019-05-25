@@ -434,14 +434,12 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Edited playlist name should be newTest \", function () {",
+							"pm.test(\"Edited playlist id should be the same \", function () {",
 							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.name).to.eql(\"newTest\");",
+							"",
+							"     pm.expect(jsonData.id).to.eql(pm.environment.get(\"playListId\"));",
 							"});",
-							"pm.test(\"Edited playlist description should be newPlaylistTest \", function () {",
-							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.description).to.eql(\"newPlaylistTest\");",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -489,14 +487,12 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Iserted track artist name should be cher \", function () {",
+							"pm.test(\"Edited playlist id should be the same \", function () {",
 							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.artist).to.eql(\"cher\");",
+							"",
+							"     pm.expect(jsonData._id).to.eql(pm.environment.get(\"playListId\"));",
 							"});",
-							"pm.test(\"Iserted track name should be believe \", function () {",
-							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.track).to.eql(\"believe\");",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -543,22 +539,14 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
-							"",
-							"pm.test(\"deleted track artist name should be cher \", function () {",
-							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.artist).to.eql(\"cher\");",
-							"});",
-							"pm.test(\"deleted track name should be believe \", function () {",
-							"    var jsonData = pm.response.json();",
-							"     pm.expect(jsonData.track).to.eql(\"believe\");",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "DELETE",
+				"method": "PUT",
 				"header": [],
 				"url": {
 					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}}}  ",
@@ -582,6 +570,17 @@
 							"value": "{{track}}}  "
 						}
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testar cenas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []

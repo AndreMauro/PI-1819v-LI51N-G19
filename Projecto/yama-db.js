@@ -100,8 +100,8 @@ class YamaDB {
 
     insertMusic(playListId, music){
         return this.getPlaylistById(playListId)
-        .then(body => {
-            body.musics.push(music)
+        .then(playlist => {
+            playlist.musics.push(music)
             
             const options = {
                 'method': 'PUT',
