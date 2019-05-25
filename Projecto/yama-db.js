@@ -59,6 +59,7 @@ class YamaDB {
         body.description=description
 
         const options = {
+            'method': 'PUT' ,
             'uri': `${this.playlist}/${id}`,
             'json': true,
             'body': body
@@ -69,9 +70,8 @@ class YamaDB {
             return rp(options)
             .then(
                 body => {
-                    return  { "id" : body._id}
+                    return { "id" : body._id}
                   }
-
             )
          })
     }
@@ -115,7 +115,7 @@ class YamaDB {
             return rp(options)
             .then(
                 body => {
-                  return  { "id" : body._id}
+                  return  body
                 }
             )
         })
@@ -140,7 +140,7 @@ class YamaDB {
             return rp(options)
             .then(
                 body => {
-                  return  { "id" : body._id}
+                  return  body
                 }
             )
         })

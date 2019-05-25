@@ -2,7 +2,6 @@
 
 const http = require('http')
 const express = require('express')
-
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const yamaWebApi= require("./yama-web-api")

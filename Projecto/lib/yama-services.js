@@ -62,7 +62,8 @@ class Yama {
     editPlaylist(id, name, description){
         return this.YamaDb.editPlaylist(id,name, description)
         .catch(err => 
-            Promise.reject({statusCode: 404}
+            Promise.reject({statusCode: 404,
+            err: err}
            ))
     }
     getPlaylists(){

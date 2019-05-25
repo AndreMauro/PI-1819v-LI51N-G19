@@ -114,7 +114,7 @@ module.exports = (app) => {
                     resp.end(JSON.stringify(data))
             })
             .catch(err => {
-                resp.statusCode = err.code
+                resp.statusCode = err.statusCode
                 resp.end()
             })
         }
@@ -124,7 +124,7 @@ module.exports = (app) => {
         let id = req.params.playlistId
         yama.editPlaylist(id, req.body.name, req.body.description)
         .then(data => resp.status(200).end(JSON.stringify(data)))
-        .catch(err => next(err))     
+        .catch(next)     
     }
 
     //http://localhost:3000/yama/playlists/
@@ -157,10 +157,10 @@ module.exports = (app) => {
     }
 
     function resourceNotFond(req, resp, next) {
-        next({
+        next(JSON.stringify({
             'code': 404,
             'message': 'Resource Not Found'
-        })
+        }))
     }
 
     
