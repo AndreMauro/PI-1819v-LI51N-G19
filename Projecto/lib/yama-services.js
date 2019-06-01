@@ -78,16 +78,12 @@ class Yama {
         .then( music =>{
            return this.YamaDb.insertMusic(playListId, music)
         })
-        .catch(err => 
-            Promise.reject({statusCode: 404}
-           ))
+            .catch(err => Promise.reject(err))
     }
 
     deleteMusic(playListId, artist, track){
         return this.YamaDb.deleteMusic(playListId, artist, track)
-        .catch(err => 
-            Promise.reject({statusCode: 404}
-           ))
+                .catch(err => Promise.reject(err))
     }
 
 }

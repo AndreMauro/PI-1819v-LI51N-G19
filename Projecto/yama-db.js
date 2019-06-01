@@ -20,7 +20,8 @@ class YamaDB {
             'json': true,
             'body': {'name': name,
                     'description': description,
-                    'musics': [] 
+                    'musics': [] ,
+                    'totaltime': 0
                 }
         }
         return rp(options)
@@ -46,6 +47,7 @@ class YamaDB {
                 playlist.name = body._source.name
                 playlist.description = body._source.description
                 playlist.musics = body._source.musics
+                playlist.totaltime = body._source.totaltime
                  
                 return playlist
             })
@@ -91,7 +93,8 @@ class YamaDB {
                         'id':p._id,
                         'name': p._source.name,
                         'description':p._source.description,
-                        'musics': p._source.musics
+                        'musics': p._source.musics,
+                        'totaltime': p._source.totaltime
                     })
                 })
                return obj
@@ -101,8 +104,20 @@ class YamaDB {
     insertMusic(playListId, music){
         return this.getPlaylistById(playListId)
         .then(playlist => {
+
+            let found = false
+            //verificar se a musica já existe antes de fazer push
+            playlist.musics.forEach(m => {
+                if(m.artist == music.artist && m.name == music.name){
+                   found = true
+                }
+            })
+
+            if(!found){
+             //atualizar o tempot total da playlist!
+            playlist.totaltime += parseInt(music.duration)
             playlist.musics.push(music)
-            
+           
             const options = {
                 'method': 'PUT',
                 'uri': `${this.playlist}/${playListId}`,
@@ -110,6 +125,12 @@ class YamaDB {
                 'body': playlist
             }
             return options
+            }
+
+            else{
+                 throw { statusCode: 409, message: 'Esta musica já se encontra na playlist' } 
+            }
+           
         })
         .then(options=> {
             return rp(options)
@@ -119,11 +140,20 @@ class YamaDB {
                 }
             )
         })
+        
+        
     }
 
     deleteMusic(playlistId, artist, track){
        return this.getPlaylistById(playlistId)
         .then(body =>{
+            let a = playlist.musics[artist]
+            let t = playlist.musics[track]
+
+            if(a  == null || t == null) {
+                throw {statusCode: 404, message: "O nome do artista ou da musica podem estar incorrectos"}
+            }
+            
             body.musics =  playlist.musics.filter( m => m.name != track && m.artist != artist)
     
            

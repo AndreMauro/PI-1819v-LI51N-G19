@@ -546,10 +546,14 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
+				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}}}  ",
+					"raw": "http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}} ",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -567,7 +571,7 @@
 						},
 						{
 							"key": "track",
-							"value": "{{track}}}  "
+							"value": "{{track}} "
 						}
 					]
 				}
@@ -580,7 +584,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:9200/yama/playlist/MIJ34GoB_7_ROgrXeSGL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"yama",
+						"playlist",
+						"MIJ34GoB_7_ROgrXeSGL"
+					]
 				}
 			},
 			"response": []

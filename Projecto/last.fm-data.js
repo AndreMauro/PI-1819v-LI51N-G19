@@ -124,13 +124,11 @@ class LastfmData {
         return rp.get(options)
         .then(body => {
             {
-                //body = JSON.parse(body)
-
                 let music = {
                     "artist" : artist,
                     "name" : track,
                     "duration" : body.track.duration,
-                    "playcount": body.track.playcount
+                    "mbid": body.track.mbid
                 }
                return music
             }

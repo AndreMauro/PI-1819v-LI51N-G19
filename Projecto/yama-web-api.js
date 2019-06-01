@@ -35,7 +35,7 @@ module.exports = (app) => {
     app.put('/yama/playlists/:playlistId', editPlaylist)   //put
     app.get('/yama/playlists/', getPlaylists) //allPlaylists
     app.post('/yama/playlists/:playListId', insertMusic)
-    app.delete('/yama/playlists/:playListId/?artist=:artist&track=:track', deleteMusic)
+    app.delete('/yama/playlists/:playListId?artist=:artist&track=:track', deleteMusic)
 
     app.use(resourceNotFond)
     return app
@@ -144,7 +144,10 @@ module.exports = (app) => {
             .then(body =>{
                 resp.statusCode = 200
                 resp.end(JSON.stringify(body))})
-            .catch(err => next(err))     
+            .catch(err => {
+                resp.statusCode = err.statusCode
+                resp.end( JSON.stringify(err.message))
+            })
             
         
     }
@@ -155,7 +158,10 @@ module.exports = (app) => {
         let playListId = req.params.playListId
         yama.deleteMusic(playListId ,query.artist, query.track)
         .then(data => res.status(200).end(JSON.stringify(data)))
-        .catch(err => next(err))  
+        .catch(err => {
+            resp.statusCode = err.statusCode
+            resp.end( JSON.stringify(err.message))
+        })
     }
 
     function resourceNotFond(req, resp, next) {
