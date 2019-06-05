@@ -1,0 +1,19 @@
+<div id="Docentes">
+        <h3>Albums</h3>
+        <table id="professores" style="width:100%;">
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Playcount</th>
+                <th>Cover</th>
+            </tr>
+            {{#each albums }}
+            <tr>
+                <td>{{ Name }}</td>
+                <td>{{ Url }}</td>
+                <td>{{ Playcount }}</td>
+                <td>{{ Image }}</td>
+            </tr>
+            {{/ each}}
+        </table>
+    </div>
