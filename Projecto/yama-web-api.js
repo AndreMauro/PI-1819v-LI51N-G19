@@ -78,7 +78,7 @@ module.exports = (app) => {
             .then((body) => {
                 resp.statusCode = 200
                 //resp.end(JSON.stringify(body))
-                resp.render('albumsView', { albums: body })
+                resp.render('albumsView.hbs', { albums: body })
             })
             .catch((err => {
                 console.log(err)
