@@ -20,10 +20,10 @@ module.exports = (app) => {
     app.use(passport.initialize())
     app.use(passport.session())
 
-    app.get('/foca/auth/session', getSession)
-    app.post('/foca/auth/login', login)
-    app.post('/foca/auth/logout', logout)
-    app.post('/foca/auth/signup', signup)
+    app.get('/yama/auth/session', getSession)
+    app.post('/yama/auth/login', login)
+    app.post('/yama/auth/logout', logout)
+    app.post('/yama/auth/signup', signup)
 
     function getSession(req, resp, next) {
         const fullname = req.isAuthenticated() ? req.user.fullname : undefined
