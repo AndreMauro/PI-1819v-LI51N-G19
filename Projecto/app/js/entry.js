@@ -26,7 +26,7 @@ const divNavbar = document.getElementById('divNavbar')
  * Gets the authentication session and insert the navbar.
  */
  
-//getAuthAndInsertNavbar()
+getAuthAndInsertNavbar()
 
 window.onhashchange = showView
 window.onload = showView
@@ -37,7 +37,7 @@ function showView(){
 		case '#home': // home page
 			home(divMain)
 			break
-        case '#artist': // on this view we can view artist info
+        case '#artists': // on this view we can view artist info
             artist(divMain)
             break
         case '#albums': // show albums of an artist

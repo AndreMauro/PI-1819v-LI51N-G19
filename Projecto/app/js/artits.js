@@ -6,13 +6,13 @@ const artistHTML = require('./../views/artists.html')
 
 module.exports = (divMain) => {
 	
-    divMain.innerHTML = competitionsHTML
+    divMain.innerHTML = artistHTML
 	document
 		.getElementById('buttonSearch')
 		.addEventListener('click', searchHandler)
 		
 	const divSearchResults = document.getElementById('divSearchResults')
-	const searchResultsView = Handlebars.compile(competitionsHBS)
+	const searchResultsView = Handlebars.compile(artistsHBS)
 
 	function searchHandler(ev){
 		ev.preventDefault()
