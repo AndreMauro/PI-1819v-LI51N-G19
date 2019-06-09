@@ -3,6 +3,8 @@
 
 require('./../../node_modules/bootstrap/dist/css/bootstrap.min.css')
 require('./../../node_modules/bootstrap/dist/js/bootstrap.js')
+//require('./css/stylesheet.css')
+
 const util = require('./util.js')
 const home = require('./home')
 const artist = require('./artits')

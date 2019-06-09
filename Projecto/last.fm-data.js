@@ -34,6 +34,8 @@ class LastfmData {
                     artist.mbid = element.mbid
                     retArtists.push(artist)
                     })
+
+                    console.log(retArtists)
                 return retArtists
             })
     }
