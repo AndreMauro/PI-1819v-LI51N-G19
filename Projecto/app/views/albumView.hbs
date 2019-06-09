@@ -1,0 +1,19 @@
+<div>
+    {{Album.Name}}
+
+</div>
+
+<table id="songs" style="width:100%;">
+    <tr>
+        <th>Name</th>
+        <th>Duration</th>
+        <th>Rank</th>
+    </tr>
+    {{#each Album.tracks }}
+    <tr>
+        <td>{{ Name }}</td>
+        <td>{{ Duration }}</td>
+        <td>{{ Rank }}</td>
+    </tr>
+    {{/ each}}
+</table>

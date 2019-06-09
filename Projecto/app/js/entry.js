@@ -8,8 +8,8 @@ require('./../../node_modules/bootstrap/dist/js/bootstrap.js')
 const util = require('./util.js')
 const home = require('./home')
 const artist = require('./artits')
-//const albums = require('./albums')
-//const albumDetail = require('./albumdetail')
+const albums = require('./albums')
+//const album = require('./album')
 //const playlists = require('./playlists')
 
 //const login = require('./login')
@@ -43,10 +43,10 @@ function showView(){
             artist(divMain)
             break
         case '#albums': // show albums of an artist
-          //  albums(divMain)
+            albums(divMain)
             break
         case '#albumDetail': //shows the detail of a specific album
-            //albumDetail(divMain)
+            //album(divMain)
             break
         case '#playlists': // show all playlists
             //playlists(divMain)
