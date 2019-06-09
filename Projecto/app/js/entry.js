@@ -7,7 +7,7 @@ const util = require('./util.js')
 const home = require('./home')
 const artist = require('./artits')
 const albums = require('./albums')
-//const albumDetail = require('./albumdetail')
+//const album = require('./album')
 //const playlists = require('./playlists')
 
 //const login = require('./login')
@@ -44,7 +44,7 @@ function showView(){
             albums(divMain)
             break
         case '#albumDetail': //shows the detail of a specific album
-            //albumDetail(divMain)
+            //album(divMain)
             break
         case '#playlists': // show all playlists
             //playlists(divMain)
