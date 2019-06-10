@@ -8,9 +8,9 @@
     {{#each albums }}
     <tr>
         <td>{{ Name }}</td>
-        <td>{{ Url }}</td>
+        <td><a href=" {{ Url }}" >{{Name}}</a></td>
         <td>{{ Playcount }}</td>
-        <td>{{ Image }}</td>
+        <td><img src="{{ Image }}"></td>
     </tr>
     {{/ each}}
 </table>

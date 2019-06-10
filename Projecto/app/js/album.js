@@ -5,6 +5,7 @@ const albumHBS = require('./../views/albumView.hbs')
 const albumHTML = require('./../views/album.html')
 
 module.exports = (divMain) => {
+
 	
     divMain.innerHTML = albumHTML
 	document
@@ -16,12 +17,19 @@ module.exports = (divMain) => {
 
 	function getAlbum(ev){
 		ev.preventDefault()
-		fetch(`http://localhost:3000/yama/artist/Eminem/Album/Recovery`)
-			.then(res => res.json())
-			.then(album => albumDetail.innerHTML = setAlbum(album))
+		const artisName = 'Drake'
+		const albumName = 'Take care'
+		fetch(`http://localhost:3000/yama/artist/${artisName}/Album/${albumName}`)
+			.then(res =>{
+			const x =	res.json()
+			alert(JSON.stringify(x))
+			return x
+			}  )
+			.then(album => albumDetail.innerHTML = setAlbum(album.tracks))
 			.catch(err => console.log(err))
 	}
-   function setAlbum(album) {
-        return albumView({album})
-    }
+   function setAlbum(tracks) {
+        return albumView({tracks})
+	}
+
 }

@@ -50,7 +50,7 @@ module.exports = (app) => {
     app.delete('/yama/playlists/:playListId?artist=:artist&track=:track', deleteMusic)
 
     app.use(resourceNotFond)
-    return app
+    //return app
 
     function checkAuthentication(req, resp, next) {
         if(req.isAuthenticated())
@@ -109,7 +109,7 @@ module.exports = (app) => {
         const albumName = req.params.albumName
 
         yama.getAlbumsDetails(artistName, albumName)
-            .then((body) => {
+            .then((body) => {            
                 resp.statusCode = 200
                 resp.end(JSON.stringify(body))
             })
