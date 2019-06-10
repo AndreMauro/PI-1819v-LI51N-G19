@@ -10,10 +10,14 @@ module.exports = (divMain) => {
 	document
 		.getElementById('buttonSearch')
         .addEventListener('click', searchHandler)
+    
+     
         
     const artistName = document.getElementById('artistName')
-	const divSearchResults = document.getElementById('divSearchResults')
-	const searchResultsView = Handlebars.compile(artistsHBS)
+	const divSearchResults = document.getElementById('divSearchResults')//.addEventListener('click', searchAlbum)
+
+    const searchResultsView = Handlebars.compile(artistsHBS)
+
 
 	function searchHandler(ev){
         ev.preventDefault()
@@ -25,10 +29,14 @@ module.exports = (divMain) => {
 			.then(res => res.json())
 			.then(artists => divSearchResults.innerHTML = searchArtists(artists))
 			.catch(err => console.log(err))
-	}
-   function searchArtists(artists) {
-       alert(artist)
-       console.log(JSON.stringify(artist))
-        return searchResultsView({artists})
     }
+    
+
+   
+
+   function searchArtists(artist) {
+        return searchResultsView({artist})
+    }
+
+    
 }

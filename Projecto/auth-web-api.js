@@ -26,12 +26,14 @@ module.exports = (app) => {
     app.post('/yama/auth/signup', signup)
 
     function getSession(req, resp, next) {
+        console.log('' + req.isAuthenticated())
         const fullname = req.isAuthenticated() ? req.user.fullname : undefined
         resp.json({
             'auth': req.isAuthenticated(),
             'fullname': fullname
         })
     }
+
     function login(req, resp, next) {
         authService
             .authenticate(req.body.username, req.body.password)

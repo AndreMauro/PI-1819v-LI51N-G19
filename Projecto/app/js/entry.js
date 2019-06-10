@@ -12,7 +12,7 @@ const albums = require('./albums')
 //const album = require('./album')
 //const playlists = require('./playlists')
 
-//const login = require('./login')
+const login = require('./login')
 const mainView = require('./../views/main.html')
 const Handlebars = require('./../../node_modules/handlebars/dist/handlebars.js')
 const navView = Handlebars.compile(require('./../views/navbar.hbs'))
@@ -51,9 +51,9 @@ function showView(){
         case '#playlists': // show all playlists
             //playlists(divMain)
             break	
-      /*  case '#login': // will have list,add,remove, gamesbetween
+        case '#login': // will have list,add,remove, gamesbetween
             login(divMain, getAuthAndInsertNavbar)
-            break	*/			
+            break				
         default:
             divMain.innerHTML = 'Resource not found!'
     }

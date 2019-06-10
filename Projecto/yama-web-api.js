@@ -41,6 +41,7 @@ module.exports = (app) => {
     app.get('/yama/searchArtist/:artistName', getArtist)
     app.get('/yama/artist/:artistName/Albums', getAlbums)
     app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
+    app.use(checkAuthentication)
     app.post('/yama/playlists', createPlaylist) // post
     app.get('/yama/playlists/:playlistId', getPlaylistById) //singlePlaylist
     app.put('/yama/playlists/:playlistId', editPlaylist)   //put
@@ -51,6 +52,17 @@ module.exports = (app) => {
     app.use(resourceNotFond)
     return app
 
+    function checkAuthentication(req, resp, next) {
+        if(req.isAuthenticated())
+			next()
+        else{
+			//util.showAlert('Não tem acesso a estes recursos')
+			next({
+				'statusCode': 401,
+				'err': 'Cannot access foca by unauthenticated users!'
+			})
+		} 
+    }
     // http://localhost:3000/yama/searchArtist/:artistName
     function getArtist(req, resp) {
         console.log('yap geting an artist for you')
