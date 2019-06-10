@@ -2,14 +2,13 @@
 
 require('./../../node_modules/bootstrap/dist/css/bootstrap.min.css')
 require('./../../node_modules/bootstrap/dist/js/bootstrap.js')
-//require('./css/stylesheet.css')
 
 const util = require('./util.js')
 const home = require('./home')
 const artist = require('./artits')
 const albums = require('./albums')
 const album = require('./album')
-//const playlists = require('./playlists')
+const playlists = require('./playlists')
 
 const login = require('./login')
 const mainView = require('./../views/main.html')
@@ -48,7 +47,7 @@ function showView(){
            album(divMain)
             break
         case '#playlists': // show all playlists
-            //playlists(divMain)
+            playlists(divMain)
             break	
         case '#login': // will have list,add,remove, gamesbetween
             login(divMain, getAuthAndInsertNavbar)

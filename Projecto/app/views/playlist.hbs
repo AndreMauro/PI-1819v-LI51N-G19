@@ -1,0 +1,16 @@
+{{#each this}}
+	<tr>
+		<td>{{id}}</td>
+		<td>{{name}}</td>
+		<td>{{description}}</td>
+		<td>
+		{{#with this.musics}}
+			{{#each this}}
+				id:	{{id}} | nome:	{{name}} | fundação:	{{founded}}<br>
+			{{/each}}
+		{{/with}}
+		</td>
+	</tr>	
+{{/each}}
+
+		

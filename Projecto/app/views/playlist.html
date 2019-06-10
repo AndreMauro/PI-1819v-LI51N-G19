@@ -1,0 +1,46 @@
+<center>
+	<h2>Playlists
+	</h2>
+</center>
+<form>
+  <div class="form row">
+        <div class="form-group col-md-3">
+             <label for="playlistId">PlaylistId:</label>
+             <input type="text" class="form-control" placeholder="playlistId" name="playlistId" id="playlistId">
+        </div>
+        <div class="form-group col-md-3">
+             <label for="nomeDoArtista">Npme do artista:</label>
+             <input type="text" class="form-control" placeholder="NomedoArtista?" id="artistName">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="musica">Musica:</label>
+            <input type="text" class="form-control" placeholder="Nome da musica?" id="track">
+       </div>
+    </div>
+    <hr>
+
+    <h4>Playlist creationFields</h4>
+    <div class="form row">
+        <div class="form-group col-md-2">
+            <label for="groupName">Name:</label>
+            <input type="text" class="form-control" placeholder="Nome do Grupo" name="groupName" id="groupName">
+       </div>
+          <div class="form-group col-md-2">
+            <label for="teamId">Description:</label>
+            <input type="text" class="form-control" placeholder="Descrição do grupo" name="descriptionId" id="descriptionId">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" id="buttonSearch">Procurar</button>
+            <button type="submit" class="btn btn-primary" id="buttonCreatePlaylist">Criar playlist</button>
+            <button type="submit" class="btn btn-primary" id="buttonEditPlaylist">Editar playlist</button>
+            <button type="submit" class="btn btn-primary" id="buttonInsertMusic">Inserir musica</button>
+            <button type="submit" class="btn btn-primary" id="buttonRemoveMusic">Remover musica</button>
+        </div>
+    </div>
+</form>
+<div class="card">
+    <div class="card-body" id="divSearchResults" >
+    </div>
+</div>

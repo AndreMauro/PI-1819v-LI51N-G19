@@ -21,7 +21,7 @@ module.exports = (divMain) => {
 		if(!artistName.value){
             util.showAlert('por favor introduza o nome de um artista')
             }
-        const artist = artistName.value
+		const artist = artistName.value
 		fetch(`http://localhost:3000/yama/artist/${artist}/Albums`)
 			.then(res => res.json())
 			.then(albums => albumsList.innerHTML = setAlbums(albums))
