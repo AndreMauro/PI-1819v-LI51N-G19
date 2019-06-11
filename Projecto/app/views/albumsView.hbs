@@ -1,14 +1,14 @@
-<row id="albums" >
+<div class="ui stackable four column grid" id="albums" >
        {{#each albums }} 
        <div class="col-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <img class="card-img-top" src="{{ Image }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{Name}}</h5>
                     <p class="card-text">Este album foi reproduzido
                         {{Playcount}}
                         vezes!</p>
-                    <a href="#albumDetail/{{artist}}/{{Name}}" class="btn btn-primary">Go this album</a>
+                    <a href="#albumDetail/{{Artist}}/{{Name}}" class="btn btn-primary">Go this album</a>
                 </div>
             </div>
         </div>

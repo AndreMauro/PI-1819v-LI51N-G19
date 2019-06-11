@@ -13,7 +13,10 @@ module.exports = (divMain, artist) => {
 
 	fetch(`http://localhost:3000/yama/artist/${artist}/Albums`)
 		.then(res => res.json())
-		.then(albums => albumsList.innerHTML = setAlbums(albums))
+		.then(albums =>{
+			alert(JSON.stringify(albums))
+			albumsList.innerHTML = setAlbums(albums) 
+		})
 		.catch(err => console.log(err))
 	
    function setAlbums(albums) {

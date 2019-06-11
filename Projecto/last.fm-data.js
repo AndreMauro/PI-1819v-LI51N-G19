@@ -61,6 +61,7 @@ class LastfmData {
                     album.Name = element["name"]
                     album.Url = element["url"]
                     album.Playcount = element["playcount"]
+                    album.Artist = element["artist"].name
                     element["image"].forEach(img => {
                         if(img["size"] == 'extralarge')
                         album.Image = img["#text"]
@@ -77,7 +78,6 @@ class LastfmData {
         let method = 'album.getInfo'
 
         const options = {
-            
             'uri': `${this.lastfmDataApi}${method}&artist=${artistName}&album=${albumName}&api_key=${this.api_key}&format=json`,
             'json' : true
         }

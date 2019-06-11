@@ -1,9 +1,6 @@
 'use strict'
 
 const url = require('url')
-//const hbs = require('hbs')
-//var path = require('path')
-//var exphbs = require('express-handlebars')
 //const Yama = require('./lib/yama-mock')
 const Yama = require('./lib/yama-services')
 
@@ -22,22 +19,6 @@ const yama = Yama.init(es)
 
 module.exports = (app) => {
 
-    /* Gerir playlists (listas de músicas favoritas):
-     Criar, atribuindo-lhe um nome e descrição
-     Editar, alterando o seu nome e descrição
-     Listar
-     Obter os detalhes, onde consta: o nome, descrição, total de tempo das músicas que o constituem e os detalhes de cada música (nome e duração).
-     Adicionar uma música
-     Remover uma música*/
-   /* app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'hbs');
-    var hbsHelpers = exphbs.create({
-        helpers: require("./public/javascripts/handlebars.js").helpers,
-        defaultLayout: '../layout',
-        extname: '.hbs'
-    });
-    app.engine('.hbs', hbsHelpers.engine);*/
-
     app.get('/yama/searchArtist/:artistName', getArtist)
     app.get('/yama/artist/:artistName/Albums', getAlbums)
     app.get('/yama/artist/:artistName/Album/:albumName', getAlbumsDetails)
@@ -50,7 +31,6 @@ module.exports = (app) => {
     app.delete('/yama/playlists/:playListId?artist=:artist&track=:track', deleteMusic)
 
     app.use(resourceNotFond)
-    //return app
 
     function checkAuthentication(req, resp, next) {
         if(req.isAuthenticated())
@@ -90,7 +70,6 @@ module.exports = (app) => {
             .then((body) => {
                 resp.statusCode = 200
                 resp.end(JSON.stringify(body))
-               // resp.render('albumsView.hbs', { albums: body })
             })
             .catch((err => {
                 console.log(err)
@@ -104,7 +83,6 @@ module.exports = (app) => {
     //Get the metadata and tracklist for an album on Last.fm using the album name or a musicbrainz id.
     //http://localhost:3000/yama/artist/{artistName}/Album/{albumName}
     function getAlbumsDetails(req, resp) {
-
         const artistName = req.params.artistName
         const albumName = req.params.albumName
 
