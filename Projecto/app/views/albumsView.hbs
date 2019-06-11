@@ -1,16 +1,16 @@
-<table id="albums" style="width:100%;">
-    <tr>
-        <th>Name</th>
-        <th>URL</th>
-        <th>Playcount</th>
-        <th>Cover</th>
-    </tr>
-    {{#each albums }}
-    <tr>
-        <td>{{ Name }}</td>
-        <td><a href=" {{ Url }}" >{{Name}}</a></td>
-        <td>{{ Playcount }}</td>
-        <td><img src="{{ Image }}"></td>
-    </tr>
-    {{/ each}}
-</table>
+<row id="albums" >
+       {{#each albums }} 
+       <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ Image }}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{Name}}</h5>
+                    <p class="card-text">Este album foi reproduzido
+                        {{Playcount}}
+                        vezes!</p>
+                    <a href="#albumDetail/{{artist}}/{{Name}}" class="btn btn-primary">Go this album</a>
+                </div>
+            </div>
+        </div>
+        {{/ each}}
+</row>

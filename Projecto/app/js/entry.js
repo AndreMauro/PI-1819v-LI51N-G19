@@ -32,7 +32,9 @@ window.onhashchange = showView
 window.onload = showView
 
 function showView(){
-    const path = window.location.hash
+    let path = window.location.hash
+    const aux = path.split('/')
+    path = (aux.length>1)? aux[0] : path
     switch(path){
 		case '#home': // home page
 			home(divMain)
@@ -41,10 +43,10 @@ function showView(){
             artist(divMain)
             break
         case '#albums': // show albums of an artist
-            albums(divMain)
+            albums(divMain, aux[1])
             break
         case '#albumDetail': //shows the detail of a specific album
-           album(divMain)
+           album(divMain, aux[1], aux[2]) //aux1 artistaName, aux2 album
             break
         case '#playlists': // show all playlists
             playlists(divMain)
