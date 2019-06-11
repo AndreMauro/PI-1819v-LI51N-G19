@@ -63,7 +63,6 @@ describe('test yama', () => {
 
   //#endregion getArtist
 
-
   //#region getAlbumsDetails
   it('Should get a detail info of an album called Feedback from Djodje ', done => {
     const yamaInit = yama.init(es)
@@ -178,6 +177,7 @@ describe('test yama', () => {
   })
   //#endregion
 
+  /*
   //#region createPlaylist
   it('Should create one playlist with name The best of Eminem', done => {
     const yamaInit = yama.init(es)
@@ -337,5 +337,5 @@ describe('test yama', () => {
     })
   })
   //#endregion
-
+*/
 })
