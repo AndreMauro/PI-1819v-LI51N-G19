@@ -59,6 +59,13 @@ class Yama {
            ))
     }
 
+    getTotalTime(id){
+        return this.YamaDb.getTotalTime(id)
+        .catch(err => 
+            Promise.reject({statusCode: 404}
+           ))
+    }
+
     editPlaylist(id, name, description){
         return this.YamaDb.editPlaylist(id,name, description)
         .catch(err => 

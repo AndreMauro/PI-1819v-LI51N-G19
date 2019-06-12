@@ -78,6 +78,27 @@ class YamaDB {
          })
     }
 
+    getTotalTime(id){
+        const uri = `${this.playlist}/${id}/${totaltime}`
+
+        return rp({
+            'method': 'GET',
+            'url' : uri,
+            'json' : true
+        })
+       .then(body =>{
+               // body = JSON.parse(body)   
+                let playlist = {}         
+                playlist.id = body._id
+                playlist.name = body._source.name
+                playlist.description = body._source.description
+                playlist.musics = body._source.musics
+                playlist.totaltime = body._source.totaltime
+                 
+                return playlist.totaltime
+            })
+    }
+
     getPlaylists(){       
         const uri = `${this.playlist}/_search`
 
