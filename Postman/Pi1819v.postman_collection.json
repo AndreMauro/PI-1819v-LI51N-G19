@@ -224,17 +224,17 @@
 							"urlencoded": [
 								{
 									"key": "fullname",
-									"value": "teste 1",
+									"value": "André Mauro",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "teste 1",
+									"value": "Am",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "12345",
+									"value": "am",
 									"type": "text"
 								}
 							]
@@ -297,12 +297,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "teste 1",
+									"value": "Am",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "12345",
+									"value": "am",
 									"type": "text"
 								}
 							]
@@ -751,7 +751,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"artist\" : \"cher\",\n\t\"track\" : \"believe\"\n}"
+					"raw": "{\n\t\"artist\" : \"DaBaby\",\n\t\"track\" : \"Suge\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/yama/playlists/{{playListId}}",
@@ -825,7 +825,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9200/yama/playlist/MIJ34GoB_7_ROgrXeSGL",
+					"raw": "http://localhost:9200/yama/playlist/_search",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -834,7 +834,7 @@
 					"path": [
 						"yama",
 						"playlist",
-						"MIJ34GoB_7_ROgrXeSGL"
+						"_search"
 					]
 				}
 			},

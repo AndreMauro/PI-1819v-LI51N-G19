@@ -44,45 +44,45 @@ class Yama {
            ))
     }
 
-    createPlaylist(name, description) {
-       return this.YamaDb.createPlaylist(name, description)
+    createPlaylist(user_id, name, description) {
+       return this.YamaDb.createPlaylist(user_id, name, description)
         .catch(err => 
             Promise.reject({statusCode: 404}
            ))
 
     }
 
-    getPlaylistById(id){
-        return this.YamaDb.getPlaylistById(id)
+    getPlaylistById(user_id, id){
+        return this.YamaDb.getPlaylistById(user_id, id)
         .catch(err => 
             Promise.reject({statusCode: 404}
            ))
     }
 
-    editPlaylist(id, name, description){
-        return this.YamaDb.editPlaylist(id,name, description)
+    editPlaylist(user_id, id, name, description){
+        return this.YamaDb.editPlaylist(user_id, id, name, description)
         .catch(err => 
             Promise.reject({statusCode: 404,
             err: err}
            ))
     }
-    getPlaylists(){
-        return this.YamaDb.getPlaylists()
+    getPlaylists(user_id){
+        return this.YamaDb.getPlaylists(user_id)
         .catch(err => 
             Promise.reject({statusCode: 404}
            ))
     }
 
-    insertMusic(playListId, artist, track){
+    insertMusic(user_id, playListId, artist, track){
         return this.lastfm.getMusic( artist, track)
         .then( music =>{
-           return this.YamaDb.insertMusic(playListId, music)
+           return this.YamaDb.insertMusic(user_id, playListId, music)
         })
             .catch(err => Promise.reject(err))
     }
 
-    deleteMusic(playListId, artist, track){
-        return this.YamaDb.deleteMusic(playListId, artist, track)
+    deleteMusic(user_id, playListId, artist, track){
+        return this.YamaDb.deleteMusic(user_id, playListId, artist, track)
                 .catch(err => Promise.reject(err))
     }
 

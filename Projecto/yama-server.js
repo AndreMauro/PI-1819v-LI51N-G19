@@ -11,7 +11,6 @@ const expressSession = require('express-session')
 const webpackConfig = require('./webpack.config.js')
 const webpack = require('webpack')
 const webpackMiddleware = require('webpack-dev-middleware')
-
 const port = 3000
 
 nconf
@@ -27,11 +26,13 @@ console.log('Running ' + NODE_ENV)
 const webServer = express()
 webServer.use(morgan('dev'))
 webServer.use(bodyParser.json())
+webServer.use(bodyParser.urlencoded({ extended: false }))
 webServer.use(expressSession({secret: 'keyboard cat', resave: false, saveUninitialized: true }))
 webServer.use(frontEndMiddleware(isDev))
 
 authWebApi(webServer)
 yamaWebApi(webServer)
+
 http
     .createServer(webServer)
     .listen(3000, () => console.log('Server running on port ' + port))

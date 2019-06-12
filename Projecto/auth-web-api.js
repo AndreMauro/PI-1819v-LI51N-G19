@@ -26,7 +26,7 @@ module.exports = (app) => {
     app.post('/yama/auth/signup', signup)
 
     function getSession(req, resp, next) {
-        console.log('' + req.isAuthenticated())
+        console.log('isAutenticated?' + req.isAuthenticated())
         const fullname = req.isAuthenticated() ? req.user.fullname : undefined
         resp.json({
             'auth': req.isAuthenticated(),
@@ -48,7 +48,7 @@ module.exports = (app) => {
     function logout(req, res, next) {
             req.logOut() 
             res.clearCookie('connect.sid')
-            res.redirect('/')
+            res.redirect('/#home')
     }
     function signup(req, resp, next) {
         authService

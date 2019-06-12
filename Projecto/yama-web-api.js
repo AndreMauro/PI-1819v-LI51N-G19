@@ -4,7 +4,6 @@ const url = require('url')
 //const Yama = require('./lib/yama-mock')
 const Yama = require('./lib/yama-services')
 
-
 const es = {
     host: 'localhost',
     port: '9200',
@@ -12,7 +11,6 @@ const es = {
     lastfm_api: 'http://ws.audioscrobbler.com/2.0/?method=',
     apiKey: 'b77a32de4783768b503960440aa1740e'
 }
-
 
 
 const yama = Yama.init(es)
@@ -43,9 +41,9 @@ module.exports = (app) => {
 			})
 		} 
     }
+
     // http://localhost:3000/yama/searchArtist/:artistName
     function getArtist(req, resp) {
-        console.log('yap geting an artist for you')
         const artistName = req.params.artistName
 
         yama.getArtist(artistName)
@@ -60,10 +58,8 @@ module.exports = (app) => {
             }))
     }
 
-
     //Path -> http://localhost:3000/yama/artist/{artistName}/Albums
     function getAlbums(req, resp) {
-
         const artistName = req.params.artistName
 
         yama.getAlbums(artistName)
@@ -78,7 +74,6 @@ module.exports = (app) => {
             }))
 
     }
-
 
     //Get the metadata and tracklist for an album on Last.fm using the album name or a musicbrainz id.
     //http://localhost:3000/yama/artist/{artistName}/Album/{albumName}
@@ -100,7 +95,7 @@ module.exports = (app) => {
 
     //http://localhost:9200/playlists
     function createPlaylist(req, resp, next) {
-        yama.createPlaylist(req.body.name, req.body.description)
+        yama.createPlaylist(req.user._id, req.body.name, req.body.description)
             .then(data => resp.status(201).end(JSON.stringify(data)))
             .catch(err => next(err))
 
@@ -110,7 +105,7 @@ module.exports = (app) => {
     //http://localhost:3000/yama/playlists/{playlistId}
     function getPlaylistById(req, resp, next) {
         let id = req.params.playlistId
-        yama.getPlaylistById(id)
+        yama.getPlaylistById(req.user._id, id)
             .then(data => {
                 resp.statusCode = 200
                 resp.end(JSON.stringify(data))
@@ -124,14 +119,14 @@ module.exports = (app) => {
 
 function editPlaylist(req, resp, next) {
     let id = req.params.playlistId
-    yama.editPlaylist(id, req.body.name, req.body.description)
+    yama.editPlaylist(req.user._id, id, req.body.name, req.body.description)
         .then(data => resp.status(200).end(JSON.stringify(data)))
         .catch(next)
 }
 
 //http://localhost:3000/yama/playlists/
 function getPlaylists(req, resp, next) {
-    yama.getPlaylists()
+    yama.getPlaylists(req.user._id)
         .then(body => {
             resp.statusCode = 200
             resp.end(JSON.stringify(body))
@@ -143,7 +138,7 @@ function getPlaylists(req, resp, next) {
 //http://localhost:3000/yama/playlists/{playListId}/   
 function insertMusic(req, resp, next) {
     let playListId = req.params.playListId
-    yama.insertMusic(playListId, req.body.artist, req.body.track)
+    yama.insertMusic(req.user._id, playListId, req.body.artist, req.body.track)
         .then(body => {
             resp.statusCode = 200
             resp.end(JSON.stringify(body))
@@ -160,7 +155,7 @@ function insertMusic(req, resp, next) {
 function deleteMusic(req, resp, next) {
     let { query } = req.query
     let playListId = req.params.playListId
-    yama.deleteMusic(playListId, query.artist, query.track)
+    yama.deleteMusic(req.user._id, playListId, query.artist, query.track)
         .then(data => res.status(200).end(JSON.stringify(data)))
         .catch(err => {
             resp.statusCode = err.statusCode

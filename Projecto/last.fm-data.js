@@ -114,16 +114,16 @@ class LastfmData {
     //http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=b77a32de4783768b503960440aa1740e&artist=cher&track=believe&format=json' 
     getMusic( artist, track){
         let method = 'track.getInfo'
-
         const options = {
             
             'uri': `${this.lastfmDataApi}${method}&artist=${artist}&track=${track}&api_key=${this.api_key}&format=json`,
             'json' : true
         }
-
         return rp.get(options)
         .then(body => {
-            {
+            { if(body.error){
+                return Promise.reject({statusCode: 404})
+            }
                 let music = {
                     "artist" : artist,
                     "name" : track,
@@ -133,6 +133,8 @@ class LastfmData {
                return music
             }
         })
+        
+        
 
     }
 }
