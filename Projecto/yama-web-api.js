@@ -27,6 +27,7 @@ module.exports = (app) => {
     app.get('/yama/playlists/', getPlaylists) //allPlaylists
     app.post('/yama/playlists/:playListId', insertMusic)
     app.delete('/yama/playlists/:playListId?artist=:artist&track=:track', deleteMusic)
+    app.get('/yama/playlists/:playListId/totaltime',getTotalTime)
 
     app.use(resourceNotFond)
 
@@ -116,6 +117,20 @@ module.exports = (app) => {
             })
     }
 }
+
+      //http://localhost:3000/yama/playlists/:playListId/totaltime
+    function getTotalTime(req, resp,next){
+        let id = req.params.playlistId
+        yama.getTotalTime(id) 
+        .then( data => {
+            resp.statusCode = 200
+            resp.end(JSON.stringify(data))
+        })
+        .catch(err => {
+            resp.statusCode = err.statusCode
+            resp.end()
+        })
+    }
 
 function editPlaylist(req, resp, next) {
     let id = req.params.playlistId
