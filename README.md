@@ -5,7 +5,7 @@ ROTAS:
 
 Pesquisa de artistas 
 -
- -> GET http://localhost:3000/yama/searchArtist?artistName=Pink
+ -> GET http://localhost:3000/yama/searchArtist/{{artist}}
  
 Obter os álbuns de um artista 
 -
@@ -39,6 +39,10 @@ Adicionar uma música
 Remover uma música
 -
 -> DELETE http://localhost:3000/yama/playlists/{{playListId}}?artist={{artist}}&track={{track}}}  
+
+Contar tempo total de uma playlist
+-
+-> GET http://localhost:3000/yama/playlists/{{playListId}}/totaltime
 
 
 Na raiz do projeto existe uma diretoria denominada Postman com a colecção dos comandos e variaveis de ambiente.
