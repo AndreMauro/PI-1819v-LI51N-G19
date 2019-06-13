@@ -96,6 +96,7 @@ module.exports = (app) => {
 
     //http://localhost:9200/playlists
     function createPlaylist(req, resp, next) {
+        console.log('req' + JSON.stringify(req.body))
         yama.createPlaylist(req.user._id, req.body.name, req.body.description)
             .then(data => resp.status(201).end(JSON.stringify(data)))
             .catch(err => next(err))
