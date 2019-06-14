@@ -26,11 +26,10 @@ module.exports = (app) => {
     app.put('/yama/playlists/:playlistId', editPlaylist)   //put
     app.get('/yama/playlists/', getPlaylists) //allPlaylists
     app.post('/yama/playlists/:playListId', insertMusic)
-    app.delete('/yama/playlists/:playListId?artist=:artist&track=:track', deleteMusic)
-    app.get('/yama/playlists/:playListId/totaltime',getTotalTime)
-
+    app.delete('/yama/playlists/:playlistId?artist=:artist&track=:track', deleteMusic)
+    //app.get('/yama/playlists/:playListId/totaltime',getTotalTime)
     app.use(resourceNotFond)
-
+    
     function checkAuthentication(req, resp, next) {
         if(req.isAuthenticated())
 			next()
@@ -167,11 +166,12 @@ function insertMusic(req, resp, next) {
 
 }
 
-//http://localhost:3000/yama/playlists/{playListId}/?artist={artist}&track={track}  
+//http://localhost:3000/yama/playlists/:playlistId/artist/:artist/track/:track 
 function deleteMusic(req, resp, next) {
-    let { query } = req.query
-    let playListId = req.params.playListId
-    yama.deleteMusic(req.user._id, playListId, query.artist, query.track)
+    let { artist, track, playlistId } = req.query
+    console.log('DELETE' )
+    console.log(artist, track, playlistId)
+    yama.deleteMusic(req.user._id, playlistId, artist, track)
         .then(data => res.status(200).end(JSON.stringify(data)))
         .catch(err => {
             resp.statusCode = err.statusCode

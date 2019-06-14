@@ -171,7 +171,7 @@ module.exports =  async (divMain) => {
 			util.showAlert('Preencha os campos playlistId, artist e track')
 		}
 		else{
-			fetch(`http://localhost:3000/yama/playlists/${playlistId.value}?artist=${artist.value}&track=${track.value}`, options)
+			fetch(`http://localhost:3000/yama/playlists/${playlistId.value}/?artist=${artist.value}&track=${track.value}`, options)
 			.then(res => {
 				return (res.status == 409)? util.showAlert('Já existe esta musica na playlist')
 				 : res.json()

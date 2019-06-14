@@ -175,6 +175,7 @@ class YamaDB {
     deleteMusic(user_id, playlistId, artist, track){
        return this.getPlaylistById(user_id, playlistId)
         .then(body =>{
+            console.log(JSON.stringify(body))
             let a = playlist.musics[artist]
             let t = playlist.musics[track]
 
