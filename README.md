@@ -1,6 +1,6 @@
 # PI-1819v-LI51N-G19
 
-Descrição da estrutura da aplicação:
+Descrição da estrutura da aplicação(servidora):
 -
      -> 1.yama-server.js:
           1.1 inicia as dependências para os outros módulos
@@ -15,6 +15,28 @@ Descrição da estrutura da aplicação:
           4.1  implementar métodos para o acesso à base de dados das musicas
      -> 5.yama-db.js
           5.1  implementar métodos para o acesso à base de dados das playlists
+
+Temos ainda uma outra peça servidora para gerir os users e autenticação.
+com as seguintes rotas:
+     /yama/auth/session -> adequirir a sessão
+     /yama/auth/login' -> fazer login
+     /yama/auth/logout' -> logout e fechar a sessão
+     /yama/auth/signup' -> registo de um user na base de dados
+
+
+Descrição da estrutura da aplicação(cliente):
+-
+     -> A aplicação cliente tem um entry.js, onde é verificado o hash do URL e "contruida" uma pagina para cada hash
+     Existem 4 separadores
+          Inicio -> landing page.
+          Artistas -> onde o user escolhe o nome de um artista, e depois vai navegando até a um album especifico.
+          Playlists -> onde o utiliar que tenha feito login pode manipular as suas playlists
+          Login -> onde é o Login
+          
+          
+Para correr a aplicação é necessário ir a diretoria projeto através da linha de comandos e correr o comando npm install, ter o elasticSearch a correr e correr o comando npm start na mesma diretória.
+
+ 
 
 
 ROTAS:
