@@ -1,5 +1,8 @@
 # PI-1819v-LI51N-G19
 
+#Para correr a aplicação é necessário ir a diretoria projeto através da linha de comandos e correr o comando npm install, ter o elasticSearch a correr e correr o comando npm start na mesma diretória.
+
+
 Descrição da estrutura da aplicação(servidora):
 -
      -> 1.yama-server.js:
@@ -33,9 +36,6 @@ Descrição da estrutura da aplicação(cliente):
           Playlists -> onde o utiliar que tenha feito login pode manipular as suas playlists
           Login -> onde é o Login
           
-          
-Para correr a aplicação é necessário ir a diretoria projeto através da linha de comandos e correr o comando npm install, ter o elasticSearch a correr e correr o comando npm start na mesma diretória.
-
  
 
 
