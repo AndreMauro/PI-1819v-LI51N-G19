@@ -1,7 +1,7 @@
 # PI-1819v-LI51N-G19
 
-#Para correr a aplicação é necessário ir a diretoria projeto através da linha de comandos e correr o comando npm install, ter o elasticSearch a correr e correr o comando npm start na mesma diretória.
-
+Para correr a aplicação é necessário ir a diretoria projeto através da linha de comandos e correr o comando npm install, ter o elasticSearch a correr e correr o comando npm start na mesma diretória.
+-
 
 Descrição da estrutura da aplicação(servidora):
 -
